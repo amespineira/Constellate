@@ -140,7 +140,16 @@ angular.module('starter.controllers', [])
         $scope.view.newText=''
       })
     }
-
+    $scope.addLink=function(){
+      $http.post('http://localhost:4567/links/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
+        link_name:$scope.view.newName,
+        url:$scope.view.newUrl
+      }).then(function(res){
+        $scope.update();
+        $scope.view.newName=''
+        $scope.view.newUrl=''
+      })
+    }
   })
   $scope.update=function(){
     $http.get('http://localhost:4567/users/'+$scope.user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){

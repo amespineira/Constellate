@@ -23,5 +23,24 @@
         </label>
         <button ng-click="addNote()">+</button>
       </div>
+      <div class="list">
+        <div class="item item-divider">
+          Links
+        </div>
+
+        <a ng-repeat="link in view.person.links" class="item" href="#">
+          <div>Name: {{link.name}}
+          </div>
+          <div>Url: {{link.url}}
+          </div>
+        </a>
+        <label class="item item-input">
+           <span style="padding-left:10px"> <input name="type" type="text" ng-model="view.newName" placeholder="Type"/></span>
+        </label>
+        <label class="item item-input">
+           <span style="padding-left:10px"> <input name="text" type="text" ng-model="view.newUrl" placeholder="Text"/></span>
+        </label>
+        <button ng-click="addLink()">+</button>
+      </div>
   </ion-content>
 </ion-view>
