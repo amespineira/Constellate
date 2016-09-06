@@ -8,22 +8,6 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //
   $scope.view={}
-  $scope.$on('$ionicView.enter', function(e) {
-    console.log("here");
-    console.log(User);
-    var user=User.getCurrUser();
-    if(user.loggedin===true){
-      console.log("loggedin");
-      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
-        if(res.data.error!=true){
-          Data.formatData(data)
-          $scope.view.data=Data.getData();
-          return places
-        }
-      })
-      console.log($scope.view.data);
-    }
-  });
 
   $scope.testLogin=function(){
     $http.post('http://localhost:3000/auth/getUser', {token:window.localStorage.getItem('token')}).then(function(res){
@@ -39,7 +23,7 @@ angular.module('starter.controllers', [])
   $scope.controllertest="otherwords";
 
 })
-.controller('PlacesCtrl', function($scope, Chats) {
+.controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -49,7 +33,46 @@ angular.module('starter.controllers', [])
   //});
   console.log("here");
   $scope.controllertest="words";
-
+  $scope.view={}
+  $scope.$on('$ionicView.enter', function(e) {
+    console.log("here");
+    console.log(User);
+    var user=User.getCurrUser();
+    if(user.loggedin===true){
+      console.log("loggedin");
+      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+          console.log(res.data);
+          Data.formatData(res.data)
+          $scope.view.places=Data.getData();
+        }
+        console.log($scope.view.places);
+      })
+    }
+    $scope.addPlace=function(){
+      $http.post('http://localhost:4567/places/'+window.localStorage.getItem('token'), {
+        name:$scope.view.newName,
+      }).then(function(res){
+        $scope.update();
+      })
+    }
+    $scope.update=function(){
+      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+          console.log(res.data);
+          Data.formatData(res.data)
+          $scope.view.places=Data.getData();
+        }
+        console.log($scope.view.places);
+      })
+    }
+  });
+  $scope.textFilter=function(place){
+  return ($scope.view.search===undefined)? true :!(place.name.indexOf($scope.view.search)===-1 )
+}
+})
+.controller('NewPlacesCtrl', function($scope, $stateParams, $http, User, $location, $state){
+  console.log("in this controller...");
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state){
   console.log("stuff");

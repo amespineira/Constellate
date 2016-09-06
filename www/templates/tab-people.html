@@ -2,5 +2,10 @@
   <ion-content>
       People
       {{controllertest}}
-  </ion-content>
+      <div ng-repeat="place in view.places">
+        <h4>{{place.name}}</h4> <!-- on click, go to display page for the event-->
+      </div>
+      <button ng-click="addPlace()" class="button button-calm">
+        </button>
+    </ion-content>
 </ion-view>

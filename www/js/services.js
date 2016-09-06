@@ -24,7 +24,7 @@ angular.module('starter.services', [])
 })
 .factory('Data', function(){
   var places={}
-
+  var placesArray=[]
   return {
     formatData: function(apiData){
       places={};
@@ -38,12 +38,14 @@ angular.module('starter.services', [])
       apiData.people.forEach(function(person){
         places[Number(person.place_id)].people.push(person);
       })
-
+      for(var key in places){
+        placesArray.push(places[key]);
+      }
     },
     getData: function(){
-      return places;
+      return placesArray;
     },
-  
+
   }
 })
 .factory('Chats', function() {
