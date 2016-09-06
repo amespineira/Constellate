@@ -51,7 +51,7 @@ angular.module('starter.controllers', [])
     }
     $scope.addPlace=function(){
       $http.post('http://localhost:4567/places/'+window.localStorage.getItem('token'), {
-        name:$scope.view.newName,
+        name:$scope.view.newName
       }).then(function(res){
         $scope.update();
       })
@@ -67,12 +67,21 @@ angular.module('starter.controllers', [])
       })
     }
   });
+  $scope.display=function(place){
+    Data.setSelected("place", place.id)
+    $state.go("tab.places-show")
+  }
   $scope.textFilter=function(place){
   return ($scope.view.search===undefined)? true :!(place.name.indexOf($scope.view.search)===-1 )
 }
 })
-.controller('NewPlacesCtrl', function($scope, $stateParams, $http, User, $location, $state){
+.controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, User, Data,  $location, $state){
   console.log("in this controller...");
+  $scope.view={}
+  $scope.$on('$ionicView.enter',function(){
+    $scope.view.place=Data.getSelected("place");
+    console.log($scope.view.place);
+  })
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state){
   console.log("stuff");

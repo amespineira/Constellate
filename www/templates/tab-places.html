@@ -10,8 +10,8 @@
           Cancel
         </button>
       </div>
-      <div ng-repeat="place in view.places | filter: textFilter">
-        <h4>{{place.name}}</h4> <!-- on click, go to display page for the event-->
+      <div ng-repeat="place in view.places | custom: view.search">
+        <h4 ng-click="display(place)">{{place.name}}</h4> <!-- on click, go to display page for the event-->
       </div>
       <div >
 

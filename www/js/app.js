@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -59,12 +59,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-    .state('tab.places-new', {
-        url: '/new',
+    .state('tab.places-show', {
+        url: '/places/show/',
         views: {
           'tab-places': {
-            templateUrl: 'templates/places-new.html',
-            controller: 'NewPlacesCtrl',
+            templateUrl: 'templates/places-show.html',
+            controller: 'PlacesDisplayCtrl',
           }
         }
       })
