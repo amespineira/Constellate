@@ -1,5 +1,51 @@
 angular.module('starter.services', [])
+.factory('User', function(){
+  var user = {
+    username:null,
+    loggedin:false,
+    id:null
+  }
 
+  return {
+    getCurrUser: function(){
+      return user;
+    },
+    login: function(userInfo){
+      user.username=userInfo.username;
+      user.loggedin=true;
+      user.id=userInfo.id
+    },
+    logout: function(){
+      user.username=null
+      user.loggedin=false
+      user.id=null
+    }
+  }
+})
+.factory('Data', function(){
+  var places={}
+
+  return {
+    formatData: function(apiData){
+      places={};
+      apiData.places.forEach(function(place){
+        places[Number(place.id)]={
+          id:Number(place.id),
+          name:place.name,
+          people:[]
+        };
+      })
+      apiData.people.forEach(function(person){
+        places[Number(person.place_id)].people.push(person);
+      })
+
+    },
+    getData: function(){
+      return places;
+    },
+  
+  }
+})
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

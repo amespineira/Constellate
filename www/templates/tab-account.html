@@ -1,9 +1,11 @@
 <ion-view view-title="Account">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+    <a href="#/tab/account/login" class="button button-calm">Login</a>
+    <button ng-click="logout()" class="button button-calm">
+      Logout
+    </button>
+    <a href="#/tab/account/register" class="button button-calm">Register</a>
     </ion-list>
   </ion-content>
 </ion-view>
