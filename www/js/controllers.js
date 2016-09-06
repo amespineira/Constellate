@@ -7,21 +7,58 @@ angular.module('starter.controllers', [])
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //
-  $scope.view={}
-
-  $scope.testLogin=function(){
-    $http.post('http://localhost:3000/auth/getUser', {token:window.localStorage.getItem('token')}).then(function(res){
-      console.log(res.data);
-      // if(res.data.error!=true){
-      //   console.log(res.data);
-      //   User.login(res.data)
-      //   $location.path('/tab/dash');
-      // }
-    })
-  }
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
   console.log("here");
-  $scope.controllertest="otherwords";
-
+  $scope.controllertest="words";
+  $scope.view={}
+  $scope.$on('$ionicView.enter', function(e) {
+    console.log("here");
+    console.log(User);
+    var user=User.getCurrUser();
+    if(user.loggedin===true){
+      console.log("loggedin");
+      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+          console.log(res.data);
+          Data.formatData(res.data)
+          $scope.view.places=Data.getData();
+          $scope.view.people={};
+          for(var key in $scope.view.places){
+            $scope.view.places[key].people.forEach(function(person){
+              $scope.view.people[person.people_id]=person;
+            })
+          }
+          console.log($scope.view.people);
+        }
+        console.log($scope.view.places);
+      })
+    }
+    $scope.addPlace=function(){
+      $http.post('http://localhost:4567/places/'+window.localStorage.getItem('token'), {
+        name:$scope.view.newName
+      }).then(function(res){
+        $scope.update();
+      })
+    }
+    $scope.update=function(){
+      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+          console.log(res.data);
+          Data.formatData(res.data)
+          $scope.view.places=Data.getData();
+        }
+        console.log($scope.view.places);
+      })
+    }
+  });
+  $scope.display=function(place){
+    Data.setSelected("place", place.id)
+    $state.go("tab.places-show")
+  }
+  $scope.textFilter=function(place){
+  return ($scope.view.search===undefined)? true :!(place.name.indexOf($scope.view.search)===-1 )
+}
 })
 .controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
   // With the new view caching in Ionic, Controllers are only called

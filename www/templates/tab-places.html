@@ -13,8 +13,7 @@
       <div ng-repeat="place in view.places | custom: view.search">
         <h4 ng-click="display(place)">{{place.name}}</h4> <!-- on click, go to display page for the event-->
       </div>
-      <div >
-
+      <div>
         <label class="item item-input">
            <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName"/></span>
         </label>

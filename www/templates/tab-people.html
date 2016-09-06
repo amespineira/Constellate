@@ -1,11 +1,23 @@
 <ion-view view-title="Places">
   <ion-content>
-      People
-      {{controllertest}}
-      <div ng-repeat="place in view.places">
-        <h4>{{place.name}}</h4> <!-- on click, go to display page for the event-->
-      </div>
-      <button ng-click="addPlace()" class="button button-calm">
-        </button>
-    </ion-content>
+    <div class="bar bar-header item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" ng-model="view.search" placeholder="Search">
+      </label>
+      <button class="button button-clear">
+        Cancel
+      </button>
+    </div>
+    <div ng-repeat="person in view.people | custom: view.search">
+      <h4 ng-click="display(person)">{{person.first_name}} {{person.last_name}} Met At: {{view.places[person.place_id].name}}</h4> <!-- on click, go to display page for the event-->
+    </div>
+    <div>
+      <label class="item item-input">
+         <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName"/></span>
+      </label>
+      <button ng-click="addPlace()">+</button>
+
+    </div>
+  </ion-content>
 </ion-view>
