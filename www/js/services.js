@@ -23,34 +23,56 @@ angular.module('starter.services', [])
   }
 })
 .factory('Data', function(){
-  var places={}
+  var data={
+    places:{},
+    people:{}
+  }
   var selected={
     place:null,
 
   }
   return {
     formatData: function(apiData){
-      places={};
+      data.places={};
+      data.people={};
       apiData.places.forEach(function(place){
-        places[Number(place.id)]={
+        data.places[Number(place.id)]={
           id:Number(place.id),
           name:place.name,
           people:[]
         };
       })
       apiData.people.forEach(function(person){
-        places[Number(person.place_id)].people.push(person);
+        data.people[Number(person.people_id)]=person
+        data.places[Number(person.place_id)].people.push(data.people[Number(person.people_id)]);
       })
 
     },
     getData: function(){
-      return places;
+      return data.places;
+    },
+    getPeople: function(){
+      return data.people;
     },
     setSelected: function(type, id){
       selected[type]=id
     },
     getSelected: function(type){
-      return places[selected[type]]
+      console.log(type);
+      console.log(selected);
+      console.log(data);
+      console.log(data[type][selected[type]]);
+      return data[type][selected[type]]
+    },
+    clear: function(){
+      data={
+        places:{},
+        people:{}
+      }
+      selected={
+        place:null,
+
+      }
     }
   }
 })

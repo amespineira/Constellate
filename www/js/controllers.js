@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
-.controller('PeopleCtrl', function($scope, $http, User, Chats, Data) {
+.controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -23,14 +23,11 @@ angular.module('starter.controllers', [])
           console.log(res.data);
           Data.formatData(res.data)
           $scope.view.places=Data.getData();
-          $scope.view.people={};
-          for(var key in $scope.view.places){
-            $scope.view.places[key].people.forEach(function(person){
-              $scope.view.people[person.people_id]=person;
-            })
+
+          $scope.view.people=Data.getPeople();
           }
           console.log($scope.view.people);
-        }
+
         console.log($scope.view.places);
       })
     }
@@ -52,9 +49,9 @@ angular.module('starter.controllers', [])
       })
     }
   });
-  $scope.display=function(place){
-    Data.setSelected("place", place.id)
-    $state.go("tab.places-show")
+  $scope.display=function(person){
+    Data.setSelected("people", person.people_id)
+    $state.go("tab.people-show")
   }
   $scope.textFilter=function(place){
   return ($scope.view.search===undefined)? true :!(place.name.indexOf($scope.view.search)===-1 )
@@ -105,7 +102,7 @@ angular.module('starter.controllers', [])
     }
   });
   $scope.display=function(place){
-    Data.setSelected("place", place.id)
+    Data.setSelected("places", place.id)
     $state.go("tab.places-show")
   }
   $scope.textFilter=function(place){
@@ -116,9 +113,47 @@ angular.module('starter.controllers', [])
   console.log("in this controller...");
   $scope.view={}
   $scope.$on('$ionicView.enter',function(){
-    $scope.view.place=Data.getSelected("place");
+    $scope.view.place=Data.getSelected("places");
     console.log($scope.view.place);
+
   })
+  $scope.display=function(person){
+    Data.setSelected("people", person.people_id)
+    $state.go("tab.people-show")
+  }
+})
+.controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data,  $location, $state){
+  console.log("in the person display controller...");
+  $scope.view={}
+  $scope.$on('$ionicView.enter',function(){
+    $scope.user=User.getCurrUser();
+
+    $scope.view.person=Data.getSelected("people");
+    console.log($scope.view.person);
+    $scope.addNote=function(){
+      $http.post('http://localhost:4567/notes/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
+        type:$scope.view.newType,
+        text:$scope.view.newText
+      }).then(function(res){
+        $scope.update();
+        $scope.view.newType=''
+        $scope.view.newText=''
+      })
+    }
+
+  })
+  $scope.update=function(){
+    $http.get('http://localhost:4567/users/'+$scope.user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+      if(res.data.error!=true){
+        console.log(res.data);
+        Data.formatData(res.data)
+        $scope.view.places=Data.getData();
+        $scope.view.person=Data.getSelected("people");
+
+      }
+      console.log($scope.view.places);
+    })
+  }
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state){
   console.log("stuff");
@@ -186,8 +221,11 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AccountCtrl', function($scope, User, Data) {
+
+  $scope.logout=function(){
+    User.logout();
+    Data.clear();
+    window.localStorage.removeItem("token");
+  }
 });

@@ -8,7 +8,7 @@
           People
         </div>
 
-        <a ng-repeat="person in view.place.people" class="item" href="#">
+        <a ng-repeat="person in view.place.people" class="item" ng-click="display(person)">
           {{person.first_name}} {{person.last_name}}
         </a>
       </div>

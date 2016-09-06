@@ -1,0 +1,27 @@
+<ion-view view-title="Showing Person">
+  <ion-content>
+    <div class="item item-divider">
+      {{view.person.first_name}} {{view.person.first_name}}
+
+    </div>
+      <div class="list">
+        <div class="item item-divider">
+          Notes
+        </div>
+
+        <a ng-repeat="note in view.person.notes" class="item" href="#">
+          <div>Type: {{note.type}}
+          </div>
+          <div>Text: {{note.text}}
+          </div>
+        </a>
+        <label class="item item-input">
+           <span style="padding-left:10px"> <input name="type" type="text" ng-model="view.newType" placeholder="Type"/></span>
+        </label>
+        <label class="item item-input">
+           <span style="padding-left:10px"> <input name="text" type="text" ng-model="view.newText" placeholder="Text"/></span>
+        </label>
+        <button ng-click="addNote()">+</button>
+      </div>
+  </ion-content>
+</ion-view>
