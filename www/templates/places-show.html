@@ -8,9 +8,11 @@
              <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName"/></span>
           </label>
         </h1>
-
-        <button ng-show="view.showOpt" ng-click="edit()" class="button button-balanced">
+        <button ng-show="view.showOpt && !view.editing" ng-click="edit()" class="button button-balanced">
           Edit
+        </button>
+        <button ng-show="view.showOpt && view.editing" ng-click="edit()" class="button button-balanced">
+          Save
         </button>
         <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive">
           Delete
