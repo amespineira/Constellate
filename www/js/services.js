@@ -127,7 +127,7 @@ angular.module('starter.services', [])
 .service("Places", function($http, $window){
   this.addNew = function(data){
   var url = `http://localhost:4567/places/${window.localStorage.getItem('token')}`
-  $http.post(url, data)
+  return $http.post(url, data)
   .success(function(response){
       console.log("created place")
   })
@@ -153,9 +153,10 @@ angular.module('starter.services', [])
   }
 })
 .service("People", function($http, $window){
-  this.createNew = function(data, place_id){
-  var url = `http://localhost:4567/people/${place_id}/${window.localStorage.getItem('token')}`
-  $http.post(url, data)
+  this.createNew = function(data){
+  var url = `http://localhost:4567/people/${data.place_id}/${window.localStorage.getItem('token')}`
+  console.log(url);
+  return $http.post(url, data)
   .success(function(response){
       console.log("created person")
   })
@@ -167,7 +168,7 @@ angular.module('starter.services', [])
 .service("Notes", function($http, $window){
   this.addNew = function(data, person_id){
   var url = `http://localhost:4567/notes/${person_id}/${window.localStorage.getItem('token')}`
-  $http.post(url, data)
+  return $http.post(url, data)
   .success(function(response){
       console.log("created note")
   })
@@ -179,7 +180,7 @@ angular.module('starter.services', [])
 .service("Links", function($http, $window){
   this.addNew = function(data, person_id){
   var url = `http://localhost:4567/links/${person_id}/${window.localStorage.getItem('token')}`
-  $http.post(url, data)
+  return $http.post(url, data)
   .success(function(response){
       console.log("link note")
   })

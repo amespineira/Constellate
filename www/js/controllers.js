@@ -31,7 +31,7 @@ angular.module('starter.controllers', [])
         console.log($scope.view.places);
       })
     }
-    
+
     $scope.update=function(){
       $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
@@ -235,7 +235,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Data, Links, User) {
+.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Data, Links, User, $state) {
   var user_id = User.getCurrUser().id;
   $scope.notes = [];
   $scope.links = [];
@@ -272,6 +272,7 @@ angular.module('starter.controllers', [])
               e.preventDefault();
             } else {
               Places.addNew({name: $scope.input.pop_place});
+            //  $scope.input.place = $scope.input.pop_place;
             }
           }
         },
@@ -280,12 +281,12 @@ angular.module('starter.controllers', [])
     }
    };
    $scope.submitNew = function(){
-     People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place.id}).then(function(person_id){
+     People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place}).then(function(person_id){
        for (var i = 0; i < $scope.notes.length; i++) {
-         Notes.addNew($scope.notes[i], $scope.input.place.id)
+         Notes.addNew($scope.notes[i], person_id.data)
        }
        for (var y = 0; y < $scope.links.length; y++) {
-         Links.add($scope.links[y], $scope.input.place.id)
+         Links.addNew($scope.links[y], person_id.data)
        }
      })
    }
