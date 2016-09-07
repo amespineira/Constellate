@@ -117,7 +117,7 @@ angular.module('starter.controllers', [])
   $scope.removeLink = function(index){
     $scope.links.splice(index, 1)
   }
-  $scope.showPopup = function() {
+  $scope.showPopup = function() {//make code shorter + new route
     if ($scope.input.place === "NEW"){
     var myPopup = $ionicPopup.show({
       template: '<input type="text" ng-model="input.pop_place">',

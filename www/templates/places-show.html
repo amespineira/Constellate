@@ -1,0 +1,16 @@
+<ion-view view-title="Showing Place">
+  <ion-content>
+      <div class="bar bar-header bar-stable">
+        <h1 class="title">{{view.place.name}}</h1>
+      </div>
+      <div class="list">
+        <div class="item item-divider">
+          People
+        </div>
+
+        <a ng-repeat="person in view.place.people" class="item" ng-click="display(person)">
+          {{person.first_name}} {{person.last_name}}
+        </a>
+      </div>
+  </ion-content>
+</ion-view>
