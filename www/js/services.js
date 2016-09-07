@@ -1,5 +1,5 @@
 angular.module('starter.services', [])
-.factory('User', function($rootScope){
+.factory('User', function($rootScope, $ionicPopup){
   var user = {
     username:null,
     loggedin:false,
@@ -21,6 +21,11 @@ angular.module('starter.services', [])
       user.username=null
       user.loggedin=false
       user.id=null
+    },
+    showAlert: function(text) {
+      var alertPopup = $ionicPopup.alert({
+        title: text
+      });
     }
   }
 })

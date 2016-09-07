@@ -172,26 +172,34 @@ angular.module('starter.controllers', [])
     console.log($scope);
     console.log($scope.view.username);
     console.log($scope.view.password);
-    $http.post('http://localhost:4567/auth/login', {
-      username:$scope.view.username,
-      password:$scope.view.password,
-    }).then(function(res){
-      if(res.data==="User Not Found"){
-        console.log(res.data);
-      $scope.view.errormessage=res.data;
-      }
-      else{
-        console.log(res.data);
-        window.localStorage.setItem("token", res.data);
-        $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
-          if(res.data.error!=true){
-            console.log(res.data);
-            User.login(res.data);
-            $state.go('tab.places');
-          }
-        })
-      }
-    })
+    if ($scope.view.username && $scope.view.password){
+      $http.post('http://localhost:4567/auth/login', {
+        username:$scope.view.username,
+        password:$scope.view.password,
+      }).then(function(res){
+        if(res.data==="User Not Found"){
+          console.log(res.data);
+        $scope.view.errormessage=res.data;
+        User.showAlert("Invalid username/password combination")
+        }
+        else if(res.data==="Incorrect Password"){
+          User.showAlert("Invalid username/password combination")
+        }
+        else{
+          console.log(res.data);
+          window.localStorage.setItem("token", res.data);
+          $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
+            if(res.data.error!=true){
+              console.log(res.data);
+              User.login(res.data);
+              $state.go('tab.places');
+            }
+          })
+        }
+      })
+    } else {
+      User.showAlert("Enter Username and Password")
+    }
   }
   $scope.signup=function(){
     console.log("gonna signup");
@@ -199,27 +207,35 @@ angular.module('starter.controllers', [])
     console.log($scope.view.username);
     console.log($scope.view.password);
     console.log($scope.view.accountType);
-    $http.post('http://localhost:4567/auth/signup', {
-      username:$scope.view.username,
-      password:$scope.view.password,
-    }).then(function(res){
-      if(res.data==="User Not Found"){
-        console.log(res.data);
-      $scope.view.errormessage=res.data;
-      }
-      else{
-        console.log(res.data);
-        window.localStorage.setItem("token", res.data);
-        $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
-          if(res.data.error!=true){
-            console.log(res.data);
-            User.login(res.data);
-            $state.go('tab.places');
-          }
-        })
+    if ($scope.view.username && $scope.view.password){
+      $http.post('http://localhost:4567/auth/signup', {
+        username:$scope.view.username,
+        password:$scope.view.password,
+      }).then(function(res){
+        if(res.data==="User Not Found"){
+          console.log(res.data);
+        $scope.view.errormessage=res.data;
+        User.showAlert("Username taken")
+        }
+        else if(res.data==="Username taken"){
+          User.showAlert("Username taken");
+        }
+        else{
+          console.log(res.data);
+          window.localStorage.setItem("token", res.data);
+          $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
+            if(res.data.error!=true){
+              console.log(res.data);
+              User.login(res.data);
+              $state.go('tab.places');
+            }
+          })
 
-      }
-    })
+        }
+      })
+    } else {
+      User.showAlert("Enter Username and Password")
+    }
   }
 })
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
