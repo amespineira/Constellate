@@ -20,26 +20,24 @@ angular.module('starter.controllers', [])
       console.log("loggedin");
       $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
-          console.log(res.data);
+          //console.log(res.data);
           Data.formatData(res.data)
           $scope.view.places=Data.getData();
 
           $scope.view.people=Data.getPeople();
           }
-          console.log($scope.view.people);
-
-        console.log($scope.view.places);
+          //console.log($scope.view.people);
       })
     }
 
     $scope.update=function(){
       $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
-          console.log(res.data);
+        //  console.log(res.data);
           Data.formatData(res.data)
           $scope.view.places=Data.getData();
         }
-        console.log($scope.view.places);
+      //  console.log($scope.view.places);
       })
     }
     $scope.addPerson = function(){
@@ -71,11 +69,11 @@ angular.module('starter.controllers', [])
       console.log("loggedin");
       $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
-          console.log(res.data);
+        //  console.log(res.data);
           Data.formatData(res.data)
           $scope.view.places=Data.getData();
         }
-        console.log($scope.view.places);
+      //  console.log($scope.view.places);
       })
     }
     $scope.addPlace=function(){
@@ -89,11 +87,11 @@ angular.module('starter.controllers', [])
     $scope.update=function(){
       $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
-          console.log(res.data);
+        //  console.log(res.data);
           Data.formatData(res.data)
           $scope.view.places=Data.getData();
         }
-        console.log($scope.view.places);
+        //console.log($scope.view.places);
       })
     }
   });
@@ -189,7 +187,6 @@ angular.module('starter.controllers', [])
             User.login(res.data)
           }
         })
-
       }
     })
   }
@@ -235,21 +232,47 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Data, Links, User, $state) {
+.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Data, Links, User, $state, $http) {
+  $scope.form = {
+    clear: function(){
+      $scope.input = {
+        link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: {id: '', name: ''}
+      }
+    }
+  }
   $scope.notes = [];
   $scope.links = [];
   $scope.places = Data.getData();
+  $scope.places["0"] = {id: "NEW", name: "+ Add New Place"}
   $scope.input = {
-    link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: ''
+    link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: {id: '', name: ''}
   }
   $scope.addNote = function(){
-    $scope.notes.push({text: $scope.input.note_text, type: $scope.input.note_type})
+    if ($scope.input.note_text.length !== 0 && $scope.input.note_type.length !== 0){
+      $scope.notes.push({text: $scope.input.note_text, type: $scope.input.note_type})
+      $scope.input.note_text = '';
+      $scope.input.note_type = '';
+    }
   }
   $scope.addLink = function(){
-    $scope.links.push({link_name: $scope.input.link_name, url: $scope.input.url})
+    if ($scope.input.link_name.length !== 0 && $scope.input.url.length !== 0){
+      $scope.links.push({link_name: $scope.input.link_name, url: $scope.input.url})
+      $scope.input.url = '';
+      $scope.input.link_name = '';
+    }
+  }
+  $scope.update = function(){
+    return $http.get('http://localhost:4567/users/'+User.getCurrUser().id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+      if(res.data.error!=true){
+        Data.formatData(res.data)
+        $scope.places=Data.getData();
+        $scope.places["0"] = {id: "NEW", name: "+ Add New Place"}
+        return $scope.places[Object.keys($scope.places).length-1].id;
+      }
+    })
   }
   $scope.showPopup = function() {
-    if ($scope.input.place === "NEW"){
+    if ($scope.input.place.id === "NEW"){
     var myPopup = $ionicPopup.show({
       template: '<input type="text" ng-model="input.pop_place">',
       title: 'Place Name',
@@ -264,7 +287,11 @@ angular.module('starter.controllers', [])
             if (!$scope.input.pop_place) {
               e.preventDefault();
             } else {
-              Places.addNew({name: $scope.input.pop_place});
+              Places.addNew({name: $scope.input.pop_place}).then(function(data){
+                $scope.update().then(function(id){
+                  $scope.input.place = {id: id, name: $scope.input.pop_place};
+                });
+              });
             }
           }
         },
@@ -299,7 +326,7 @@ angular.module('starter.controllers', [])
    });
  };
    $scope.submitNew = function(){
-     People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place}).then(function(person_id){
+     People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place.id}).then(function(person_id){
        for (var i = 0; i < $scope.notes.length; i++) {
          Notes.addNew($scope.notes[i], person_id.data)
        }
