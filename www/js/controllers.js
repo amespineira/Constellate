@@ -1,43 +1,12 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
-.controller('PeopleCtrl', function($scope, $http, User, Chats, Data) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  $scope.view={}
-  $scope.$on('$ionicView.enter', function(e) {
-    console.log("here");
-    console.log(User);
-    var user=User.getCurrUser();
-    if(user.loggedin===true){
-      console.log("loggedin");
-      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
-        if(res.data.error!=true){
-          Data.formatData(data)
-          $scope.view.data=Data.getData();
-          return places
-        }
-      })
-      console.log($scope.view.data);
-    }
-  });
-
-  $scope.testLogin=function(){
-    $http.post('http://localhost:3000/auth/getUser', {token:window.localStorage.getItem('token')}).then(function(res){
-      console.log(res.data);
-      // if(res.data.error!=true){
-      //   console.log(res.data);
-      //   User.login(res.data)
-      //   $location.path('/tab/dash');
-      // }
-    })
+.controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
+  $scope.$state = $state;
+  $scope.log = function(){
+    $state.go('new-people')
+    console.log("Click works")
   }
-  console.log("here");
-  $scope.controllertest="otherwords";
-
 })
 .controller('PlacesCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -95,7 +64,7 @@ angular.module('starter.controllers', [])
       password:$scope.view.password,
     }).then(function(res){
       if(res.data==="User Not Found"){
-        console.log(res.data);
+        //console.log(res.data);
       $scope.view.errormessage=res.data;
       }
       else{
@@ -121,4 +90,68 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
+})
+.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Links) {
+  $scope.places = [];
+  $scope.notes = [];
+  $scope.links = [];
+  $scope.getPlaces = function(){
+    Places.getPlaces().then(function(places){//place & id
+      for (var i = 0; i < places.length; i++) {
+        $scope.places.push(places[i])
+      }
+    })
+  }
+  $scope.input = {
+    link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: ''
+  }
+  $scope.addNote = function(){
+    $scope.notes.push({text: $scope.input.note_text, type: $scope.input.note_type})
+  }
+  $scope.removeNote = function(index){
+    $scope.notes.splice(index, 1)
+  }
+  $scope.addLink = function(){
+    $scope.links.push({link_name: $scope.input.link_name, url: $scope.input.url})
+  }
+  $scope.removeLink = function(index){
+    $scope.links.splice(index, 1)
+  }
+  $scope.showPopup = function() {
+    if ($scope.input.place === "NEW"){
+    var myPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="input.pop_place">',
+      title: 'Place Name',
+      subTitle: 'please enter a place name',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>Save</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.input.pop_place) {
+              e.preventDefault();
+            } else {
+              $scope.places.push($scope.input.pop_place);
+              Places.addNew($scope.input.pop_place);
+              return $scope.input.pop_place;
+            }
+          }
+        },
+      ]
+    });
+    }
+   };
+   $scope.submitNew = function(){
+
+     People.createNew($scope.input.first, $scope.input.last, $scope.input.place.id).then(function(person_id){
+       for (var i = 0; i < $scope.notes.length; i++) {
+         Notes.createNew($scope.notes[i])
+       }
+       for (var y = 0; y < $scope.links.length; y++) {
+         Notes.createNew($scope.links[y])
+       }
+     })
+   }
 });
