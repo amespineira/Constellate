@@ -42,6 +42,9 @@ angular.module('starter.controllers', [])
         console.log($scope.view.places);
       })
     }
+    $scope.addPerson = function(){
+      $state.go("new-people");
+    }
   });
   $scope.display=function(person){
     Data.setSelected("people", person.people_id)
@@ -232,4 +235,82 @@ angular.module('starter.controllers', [])
     Data.clear();
     window.localStorage.removeItem("token");
   }
+})
+
+.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Data, Links, User, $state) {
+  $scope.notes = [];
+  $scope.links = [];
+  $scope.places = Data.getData();
+  $scope.input = {
+    link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: ''
+  }
+  $scope.addNote = function(){
+    $scope.notes.push({text: $scope.input.note_text, type: $scope.input.note_type})
+  }
+  $scope.addLink = function(){
+    $scope.links.push({link_name: $scope.input.link_name, url: $scope.input.url})
+  }
+  $scope.showPopup = function() {
+    if ($scope.input.place === "NEW"){
+    var myPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="input.pop_place">',
+      title: 'Place Name',
+      subTitle: 'please enter a place name',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>Save</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.input.pop_place) {
+              e.preventDefault();
+            } else {
+              Places.addNew({name: $scope.input.pop_place});
+            }
+          }
+        },
+      ]
+    });
+    }
+   };
+   $scope.showConfirmNote = function(index) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Delete Note',
+      template: 'Are you sure you want to remove this note?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.notes.splice(index, 1);
+      } else {
+        console.log('Nothing happens');
+      }
+    });
+  };
+  $scope.showConfirmLink = function(index) {
+   var confirmPopup = $ionicPopup.confirm({
+     title: 'Delete Link',
+     template: 'Are you sure you want to remove this link?'
+   });
+   confirmPopup.then(function(res) {
+     if(res) {
+       $scope.links.splice(index, 1);
+     } else {
+       console.log('Nothing happens');
+     }
+   });
+ };
+   $scope.submitNew = function(){
+     People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place}).then(function(person_id){
+       for (var i = 0; i < $scope.notes.length; i++) {
+         Notes.addNew($scope.notes[i], person_id.data)
+       }
+       for (var y = 0; y < $scope.links.length; y++) {
+         Links.addNew($scope.links[y], person_id.data)
+       }
+     })
+   }
+   $scope.peopleRedirect = function(){
+     $state.go('tab.people')
+   }
 });
