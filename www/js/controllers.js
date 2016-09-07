@@ -236,7 +236,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Data, Links, User, $state) {
-  var user_id = User.getCurrUser().id;
   $scope.notes = [];
   $scope.links = [];
   $scope.places = Data.getData();
@@ -246,16 +245,10 @@ angular.module('starter.controllers', [])
   $scope.addNote = function(){
     $scope.notes.push({text: $scope.input.note_text, type: $scope.input.note_type})
   }
-  $scope.removeNote = function(index){
-    $scope.notes.splice(index, 1)
-  }
   $scope.addLink = function(){
     $scope.links.push({link_name: $scope.input.link_name, url: $scope.input.url})
   }
-  $scope.removeLink = function(index){
-    $scope.links.splice(index, 1)
-  }
-  $scope.showPopup = function() {//make code shorter + new route
+  $scope.showPopup = function() {
     if ($scope.input.place === "NEW"){
     var myPopup = $ionicPopup.show({
       template: '<input type="text" ng-model="input.pop_place">',

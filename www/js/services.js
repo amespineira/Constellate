@@ -135,22 +135,6 @@ angular.module('starter.services', [])
       console.log(error, status);
     });
   }
-  this.getPlaces = function(id){
-  var url = `http://localhost:4567/users/${id}/data/${window.localStorage.getItem('token')}`
-  return $http.get(url)
-  .success(function(response){
-      console.log(response);
-      return response;
-  })
-  .error(function (error, status){
-      console.log(error, status);
-    });
-  }
-  this.Places = function(id){
-    getPlaces(id).then(function(places){
-      return places;
-    })
-  }
 })
 .service("People", function($http, $window){
   this.createNew = function(data){
