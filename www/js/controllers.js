@@ -305,7 +305,7 @@ angular.module('starter.controllers', [])
         username:$scope.view.username,
         password:$scope.view.password,
       }).then(function(res){
-        if(res.data==="User Not Found"){
+        if(res.data==="User not found"){
           console.log(res.data);
         $scope.view.errormessage=res.data;
         User.showAlert("Invalid username/password combination")
@@ -340,7 +340,7 @@ angular.module('starter.controllers', [])
         username:$scope.view.username,
         password:$scope.view.password,
       }).then(function(res){
-        if(res.data==="User Not Found"){
+        if(res.data==="User not found"){
           console.log(res.data);
         $scope.view.errormessage=res.data;
         User.showAlert("Username taken")
