@@ -53,9 +53,7 @@ angular.module('starter.controllers', [])
     Data.setSelected("people", person.people_id)
     $state.go("tab.people-show")
   }
-  $scope.textFilter=function(place){
-  return ($scope.view.search===undefined)? true :!(place.name.indexOf($scope.view.search)===-1 )
-}
+
 })
 .controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
   // With the new view caching in Ionic, Controllers are only called
