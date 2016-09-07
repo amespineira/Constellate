@@ -31,13 +31,7 @@ angular.module('starter.controllers', [])
         console.log($scope.view.places);
       })
     }
-    $scope.addPlace=function(){
-      $http.post('http://localhost:4567/places/'+window.localStorage.getItem('token'), {
-        name:$scope.view.newName
-      }).then(function(res){
-        $scope.update();
-      })
-    }
+    
     $scope.update=function(){
       $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
@@ -86,6 +80,7 @@ angular.module('starter.controllers', [])
         name:$scope.view.newName
       }).then(function(res){
         $scope.update();
+        $scope.view.newName="";
       })
     }
     $scope.update=function(){
