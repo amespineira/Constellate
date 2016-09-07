@@ -46,10 +46,10 @@
     </div>
     <div class="person_data">
       <div>
-        <button class="button button-small button-positive" ng-repeat="note in notes">{{note.text}} <a ng-click="removeNote($index)">x</a></button>
+        <button class="button button-small button-positive" ng-repeat="note in notes" ng-click="showConfirmNote($index)">{{note.text}}</button>
       </div>
       <div>
-        <button class="button button-small button-clear button-positive" ng-repeat="link in links">{{link.link_name}} <a ng-click="removeNote($index)">x</a></button>
+        <button class="button button-small button-positive" ng-repeat="link in links" ng-click="showConfirmLink($index)">{{link.link_name}}</button>
       </div>
     </div>
     <button class="button button-full button-positive" ng-click='submitNew()'>Create Contact</button>

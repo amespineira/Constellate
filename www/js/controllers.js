@@ -272,7 +272,6 @@ angular.module('starter.controllers', [])
               e.preventDefault();
             } else {
               Places.addNew({name: $scope.input.pop_place});
-            //  $scope.input.place = $scope.input.pop_place;
             }
           }
         },
@@ -280,6 +279,32 @@ angular.module('starter.controllers', [])
     });
     }
    };
+   $scope.showConfirmNote = function(index) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Delete Note',
+      template: 'Are you sure you want to remove this note?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.notes.splice(index, 1);
+      } else {
+        console.log('Nothing happens');
+      }
+    });
+  };
+  $scope.showConfirmLink = function(index) {
+   var confirmPopup = $ionicPopup.confirm({
+     title: 'Delete Link',
+     template: 'Are you sure you want to remove this link?'
+   });
+   confirmPopup.then(function(res) {
+     if(res) {
+       $scope.links.splice(index, 1);
+     } else {
+       console.log('Nothing happens');
+     }
+   });
+ };
    $scope.submitNew = function(){
      People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place}).then(function(person_id){
        for (var i = 0; i < $scope.notes.length; i++) {
