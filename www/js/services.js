@@ -137,7 +137,7 @@ angular.module('starter.services', [])
   }
   this.getPlaces = function(id){
   var url = `http://localhost:4567/users/${id}/data/${window.localStorage.getItem('token')}`
-  $http.get(url)
+  return $http.get(url)
   .success(function(response){
       console.log(response);
       return response;

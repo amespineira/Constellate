@@ -14,7 +14,7 @@
         <select ng-model="input.place" ng-change="showPopup()">
           <option selected>Select a Place</option>
           <option value="NEW">Create New</option>
-          <option ng-value="{{place}}" ng-repeat='place in places'>{{place}}</option>
+          <option ng-value="{{place.id}}" ng-repeat='place in places'>{{place.name}}</option>
         </select>
       </label>
       <div class="list">

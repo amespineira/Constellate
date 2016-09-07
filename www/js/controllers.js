@@ -2,8 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 .controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
-})
-.controller('PlacesCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -13,7 +11,159 @@ angular.module('starter.controllers', [])
   //});
   console.log("here");
   $scope.controllertest="words";
+  $scope.view={}
+  $scope.$on('$ionicView.enter', function(e) {
+    console.log("here");
+    console.log(User);
+    var user=User.getCurrUser();
+    if(user.loggedin===true){
+      console.log("loggedin");
+      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+          console.log(res.data);
+          Data.formatData(res.data)
+          $scope.view.places=Data.getData();
 
+          $scope.view.people=Data.getPeople();
+          }
+          console.log($scope.view.people);
+
+        console.log($scope.view.places);
+      })
+    }
+    $scope.addPlace=function(){
+      $http.post('http://localhost:4567/places/'+window.localStorage.getItem('token'), {
+        name:$scope.view.newName
+      }).then(function(res){
+        $scope.update();
+      })
+    }
+    $scope.update=function(){
+      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+          console.log(res.data);
+          Data.formatData(res.data)
+          $scope.view.places=Data.getData();
+        }
+        console.log($scope.view.places);
+      })
+    }
+    $scope.addPerson = function(){
+      $state.go("new-people");
+    }
+  });
+  $scope.display=function(person){
+    Data.setSelected("people", person.people_id)
+    $state.go("tab.people-show")
+  }
+
+})
+.controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
+  // With the new view caching in Ionic, Controllers are only called
+  // when they are recreated or on app start, instead of every page change.
+  // To listen for when this page is active (for example, to refresh data),
+  // listen for the $ionicView.enter event:
+  //
+  //$scope.$on('$ionicView.enter', function(e) {
+  //});
+  console.log("here");
+  $scope.controllertest="words";
+  $scope.view={}
+  $scope.$on('$ionicView.enter', function(e) {
+    console.log("here");
+    console.log(User);
+    var user=User.getCurrUser();
+    if(user.loggedin===true){
+      console.log("loggedin");
+      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+          console.log(res.data);
+          Data.formatData(res.data)
+          $scope.view.places=Data.getData();
+        }
+        console.log($scope.view.places);
+      })
+    }
+    $scope.addPlace=function(){
+      $http.post('http://localhost:4567/places/'+window.localStorage.getItem('token'), {
+        name:$scope.view.newName
+      }).then(function(res){
+        $scope.update();
+      })
+    }
+    $scope.update=function(){
+      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+          console.log(res.data);
+          Data.formatData(res.data)
+          $scope.view.places=Data.getData();
+        }
+        console.log($scope.view.places);
+      })
+    }
+  });
+  $scope.display=function(place){
+    Data.setSelected("places", place.id)
+    $state.go("tab.places-show")
+  }
+  $scope.textFilter=function(place){
+  return ($scope.view.search===undefined)? true :!(place.name.indexOf($scope.view.search)===-1 )
+}
+})
+.controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, User, Data,  $location, $state){
+  console.log("in this controller...");
+  $scope.view={}
+  $scope.$on('$ionicView.enter',function(){
+    $scope.view.place=Data.getSelected("places");
+    console.log($scope.view.place);
+
+  })
+  $scope.display=function(person){
+    Data.setSelected("people", person.people_id)
+    $state.go("tab.people-show")
+  }
+})
+.controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data,  $location, $state){
+  console.log("in the person display controller...");
+  $scope.view={}
+  $scope.$on('$ionicView.enter',function(){
+    $scope.user=User.getCurrUser();
+
+    $scope.view.person=Data.getSelected("people");
+    console.log($scope.view.person);
+    $scope.addNote=function(){
+      $http.post('http://localhost:4567/notes/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
+        type:$scope.view.newType,
+        text:$scope.view.newText
+      }).then(function(res){
+        $scope.update();
+        $scope.view.newType=''
+        $scope.view.newText=''
+      })
+    }
+    $scope.addLink=function(){
+      $http.post('http://localhost:4567/links/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
+        link_name:$scope.view.newName,
+        url:$scope.view.newUrl
+      }).then(function(res){
+        $scope.update();
+        $scope.view.newName=''
+        $scope.view.newUrl=''
+      })
+    }
+  })
+  $scope.update=function(){
+    $http.get('http://localhost:4567/users/'+$scope.user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+      if(res.data.error!=true){
+        console.log(res.data);
+        Data.formatData(res.data)
+        $scope.view.places=Data.getData();
+        $scope.view.person=Data.getSelected("people");
+
+      }
+      console.log($scope.view.places);
+    })
+  }
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state){
   console.log("stuff");
@@ -42,9 +192,9 @@ angular.module('starter.controllers', [])
           if(res.data.error!=true){
             console.log(res.data);
             User.login(res.data)
-            console.log(User.getCurrUser());
           }
         })
+
       }
     })
   }
@@ -59,7 +209,7 @@ angular.module('starter.controllers', [])
       password:$scope.view.password,
     }).then(function(res){
       if(res.data==="User Not Found"){
-        //console.log(res.data);
+        console.log(res.data);
       $scope.view.errormessage=res.data;
       }
       else{
@@ -81,28 +231,20 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AccountCtrl', function($scope, User, Data) {
+
+  $scope.logout=function(){
+    User.logout();
+    Data.clear();
+    window.localStorage.removeItem("token");
+  }
 })
-.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Links, User) {
+
+.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Data, Links, User) {
   var user_id = User.getCurrUser().id;
-  $scope.places = [];
   $scope.notes = [];
   $scope.links = [];
-  $scope.getPlaces = function(){
-    console.log("Expected "  + user_id);
-    console.log(Places.getPlaces(user_id));
-    //console.log(Places.Places(user_id));
-    Places.getPlaces(user_id).then(function(places){//place & id
-      console.log(places);
-      for (var i = 0; i < places.length; i++) {
-        $scope.places.push(places[i])
-      }
-    })
-  }
-  $scope.getPlaces()
+  $scope.places = Data.getData();
   $scope.input = {
     link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: ''
   }
@@ -134,9 +276,7 @@ angular.module('starter.controllers', [])
             if (!$scope.input.pop_place) {
               e.preventDefault();
             } else {
-            //  $scope.places.push($scope.input.pop_place);
               Places.addNew({name: $scope.input.pop_place});
-            //  return $scope.input.pop_place;
             }
           }
         },
