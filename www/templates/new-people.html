@@ -1,20 +1,20 @@
 <ion-view view-title="NewPerson">
   <ion-content>
+    <form ng-submit='submitNew(); personForm.$setPristine(); form.clear(); peopleRedirect()' name="personForm">
     <div class="list">
-      <label class="item item-input">
-        <input type="text" placeholder="First Name" ng-model='input.first'>
+      <label class="item item-input" ng-class="{invalid: personForm.fname.$invalid && personForm.fname.$dirty}">
+        <input type="text" placeholder="First Name" ng-model='input.first' name="fname" required ng-minlength=2>
       </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Last Name" ng-model='input.last'>
+      <label class="item item-input" ng-class="{invalid: personForm.lname.$invalid && personForm.lname.$dirty}">
+        <input type="text" placeholder="Last Name" ng-model='input.last' name="lname" required ng-minlength=2>
       </label>
-      <label class="item item-input item-select">
+      <label class="item item-input item-select" ng-class="{invalid: personForm.place.$invalid}">
         <div class="input-label">
           Place
         </div>
-        <select ng-model="input.place" ng-change="showPopup()">
-          <option >Select a Place</option>
-          <option value="NEW">Create New</option>
-          <option value="{{place.id}}" ng-repeat='place in places'>{{place.name}}</option>
+        <select ng-model="input.place" ng-options='place as place.name for place in places track by place.id' ng-change="showPopup()" name="place" required>
+          <option value="NEW">+ Create New</option>
+          <option value="" selected>Select a Place</option>
         </select>
       </label>
       <div class="list">
@@ -25,7 +25,7 @@
           <label class="item-input-wrapper">
             <input type="text" placeholder="Type" ng-model='input.note_type'>
           </label>
-          <button class="button button-small" ng-click="addNote({text: note_text, type: note_type})">
+          <button type="button" class="button button-small" ng-click="addNote({text: note_text, type: note_type})">
             Add Note
           </button>
         </div>
@@ -38,7 +38,7 @@
           <label class="item-input-wrapper">
             <input type="text" placeholder="URL" ng-model='input.url'>
           </label>
-          <button class="button button-small" ng-click="addLink()">
+          <button type="button" class="button button-small" ng-click="addLink()">
             Add Link
           </button>
         </div>
@@ -52,7 +52,8 @@
         <button class="button button-small button-clear button-positive" ng-repeat="link in links" ng-click="showConfirmLink($index)">{{link.link_name}}</button>
       </div>
     </div>
-    <button class="button button-full button-positive" ng-click='submitNew()'>Create Contact</button>
+    <input type="submit" class="button button-block button-positive" value="Create Contact">
+    </form>
     <button class="button button-full button-positive" ng-click='peopleRedirect()'>Cancel</button>
   </ion-content>
 </ion-view>
