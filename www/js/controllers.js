@@ -161,6 +161,14 @@ angular.module('starter.controllers', [])
   }
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state, $rootScope){
+  $scope.loggedInRedirect = function(){
+    if (User.active() === true){
+      $state.go("tab.account");
+    }
+  }
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.loggedInRedirect();
+  });
   console.log("stuff");
 
   $scope.view={}
