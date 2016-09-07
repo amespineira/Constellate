@@ -123,4 +123,68 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+})
+.service("Places", function($http, $window){
+  this.addNew = function(data){
+  var url = `http://localhost:4567/places/${window.localStorage.getItem('token')}`
+  $http.post(url, data)
+  .success(function(response){
+      console.log("created place")
+  })
+  .error(function (error, status){
+      console.log(error, status);
+    });
+  }
+  this.getPlaces = function(id){
+  var url = `http://localhost:4567/users/${id}/data/${window.localStorage.getItem('token')}`
+  $http.get(url)
+  .success(function(response){
+      console.log(response);
+      return response;
+  })
+  .error(function (error, status){
+      console.log(error, status);
+    });
+  }
+  this.Places = function(id){
+    getPlaces(id).then(function(places){
+      return places;
+    })
+  }
+})
+.service("People", function($http, $window){
+  this.createNew = function(data, place_id){
+  var url = `http://localhost:4567/people/${place_id}/${window.localStorage.getItem('token')}`
+  $http.post(url, data)
+  .success(function(response){
+      console.log("created person")
+  })
+  .error(function (error, status){
+      console.log(error, status);
+    });
+  }
+})
+.service("Notes", function($http, $window){
+  this.addNew = function(data, person_id){
+  var url = `http://localhost:4567/notes/${person_id}/${window.localStorage.getItem('token')}`
+  $http.post(url, data)
+  .success(function(response){
+      console.log("created note")
+  })
+  .error(function (error, status){
+      console.log(error, status);
+    });
+  }
+})
+.service("Links", function($http, $window){
+  this.addNew = function(data, person_id){
+  var url = `http://localhost:4567/links/${person_id}/${window.localStorage.getItem('token')}`
+  $http.post(url, data)
+  .success(function(response){
+      console.log("link note")
+  })
+  .error(function (error, status){
+      console.log(error, status);
+    });
+  }
+})

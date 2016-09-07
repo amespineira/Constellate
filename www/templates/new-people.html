@@ -2,10 +2,10 @@
   <ion-content>
     <div class="list">
       <label class="item item-input">
-        <input type="text" placeholder="First Name" ng-model=''>
+        <input type="text" placeholder="First Name" ng-model='input.first'>
       </label>
       <label class="item item-input">
-        <input type="text" placeholder="Last Name">
+        <input type="text" placeholder="Last Name" ng-model='input.last'>
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
@@ -19,11 +19,11 @@
       </label>
       <div class="list">
         <div class="item item-input-inset">
-          <label class="item-input-wrapper">
-            <input type="text" placeholder="Note" ng-model='note_text'>
+          <label class="item-input-wrapper" style="margin-right:10px;">
+            <input type="text" placeholder="Note" ng-model='input.note_text'>
           </label>
-          <label>
-            <input type="text" placeholder="Type" ng-model='note_type'>
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Type" ng-model='input.note_type'>
           </label>
           <button class="button button-small" ng-click="addNote({text: note_text, type: note_type})">
             Add Note
@@ -32,11 +32,11 @@
       </div>
       <div class="list">
         <div class="item item-input-inset">
-          <label>
-            <input type="text" placeholder="Website">
+          <label class="item-input-wrapper" style="margin-right:10px;">
+            <input type="text" placeholder="Website" ng-model='input.link_name'>
           </label>
           <label class="item-input-wrapper">
-            <input type="text" placeholder="URL">
+            <input type="text" placeholder="URL" ng-model='input.url'>
           </label>
           <button class="button button-small" ng-click="addLink()">
             Add Link
@@ -53,5 +53,6 @@
       </div>
     </div>
     <button class="button button-full button-positive" ng-click='submitNew()'>Create Contact</button>
+    <button class="button button-full button-positive" ng-click='peopleRedirect()'>Cancel</button>
   </ion-content>
 </ion-view>

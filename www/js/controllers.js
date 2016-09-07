@@ -2,11 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 .controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
-  $scope.$state = $state;
-  $scope.log = function(){
-    $state.go('new-people')
-    console.log("Click works")
-  }
 })
 .controller('PlacesCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -47,9 +42,9 @@ angular.module('starter.controllers', [])
           if(res.data.error!=true){
             console.log(res.data);
             User.login(res.data)
+            console.log(User.getCurrUser());
           }
         })
-
       }
     })
   }
@@ -91,17 +86,23 @@ angular.module('starter.controllers', [])
     enableFriends: true
   };
 })
-.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Links) {
+.controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Links, User) {
+  var user_id = User.getCurrUser().id;
   $scope.places = [];
   $scope.notes = [];
   $scope.links = [];
   $scope.getPlaces = function(){
-    Places.getPlaces().then(function(places){//place & id
+    console.log("Expected "  + user_id);
+    console.log(Places.getPlaces(user_id));
+    //console.log(Places.Places(user_id));
+    Places.getPlaces(user_id).then(function(places){//place & id
+      console.log(places);
       for (var i = 0; i < places.length; i++) {
         $scope.places.push(places[i])
       }
     })
   }
+  $scope.getPlaces()
   $scope.input = {
     link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: ''
   }
@@ -133,9 +134,9 @@ angular.module('starter.controllers', [])
             if (!$scope.input.pop_place) {
               e.preventDefault();
             } else {
-              $scope.places.push($scope.input.pop_place);
-              Places.addNew($scope.input.pop_place);
-              return $scope.input.pop_place;
+            //  $scope.places.push($scope.input.pop_place);
+              Places.addNew({name: $scope.input.pop_place});
+            //  return $scope.input.pop_place;
             }
           }
         },
@@ -144,14 +145,16 @@ angular.module('starter.controllers', [])
     }
    };
    $scope.submitNew = function(){
-
-     People.createNew($scope.input.first, $scope.input.last, $scope.input.place.id).then(function(person_id){
+     People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place.id}).then(function(person_id){
        for (var i = 0; i < $scope.notes.length; i++) {
-         Notes.createNew($scope.notes[i])
+         Notes.addNew($scope.notes[i], $scope.input.place.id)
        }
        for (var y = 0; y < $scope.links.length; y++) {
-         Notes.createNew($scope.links[y])
+         Links.add($scope.links[y], $scope.input.place.id)
        }
      })
+   }
+   $scope.peopleRedirect = function(){
+     $state.go('tab.people')
    }
 });
