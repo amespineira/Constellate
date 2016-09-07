@@ -105,19 +105,68 @@ angular.module('starter.controllers', [])
   return ($scope.view.search===undefined)? true :!(place.name.indexOf($scope.view.search)===-1 )
 }
 })
-.controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, User, Data,  $location, $state){
+.controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state){
   console.log("in this controller...");
   $scope.view={}
   $scope.view.search={}
+  $scope.view.showOpt=false;
+  $scope.view.editing=false;
   $scope.$on('$ionicView.enter',function(){
 
     $scope.view.place=Data.getSelected("places");
+    $scope.view.newName=$scope.view.place.name
     console.log($scope.view.place);
 
   })
+  $scope.edit=function(){
+    console.log("this happened");
+    if($scope.view.editing===true){
+      console.log($scope.view.place.id);
+      $http.post('http://localhost:4567/places/update/'+$scope.view.place.id+"/"+window.localStorage.getItem('token'), {
+        name:$scope.view.newName,
+      }).then(function(res){
+        console.log("made request");
+        console.log(res);
+        $scope.update();
+      })
+      // "/places/update/:place_id/:token
+    }
+    $scope.view.editing=!$scope.view.editing
+  }
+  $scope.confirmDelete = function() {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Delete Place',
+      template: 'Are you sure you want to delete this place? It will delete all people associated.'
+    });
+
+    confirmPopup.then(function(res) {
+      if(res) {
+        $http.get('http://localhost:4567/places/delete/'+$scope.view.place.id+"/"+window.localStorage.getItem('token')).then(function(res){
+          $state.go("tab.places")
+        })
+      } else {
+      }
+    });
+  };
+  $scope.addPerson=function(){
+    $state.go("new-people")
+  }
   $scope.display=function(person){
     Data.setSelected("people", person.people_id)
     $state.go("tab.people-show")
+  }
+  $scope.update=function(){
+    $scope.user=User.getCurrUser();
+    $http.get('http://localhost:4567/users/'+$scope.user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+      if(res.data.error!=true){
+        console.log(res.data);
+        Data.formatData(res.data)
+        $scope.view.places=Data.getData();
+        $scope.view.place=Data.getSelected("places");
+
+      }
+      console.log($scope.view.places);
+    })
   }
 })
 .controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data,  $location, $state){
@@ -238,12 +287,16 @@ angular.module('starter.controllers', [])
 })
 
 .controller('NewPerson', function($scope, $ionicPopup, $timeout, Places, People, Notes, Data, Links, User, $state) {
-  $scope.notes = [];
-  $scope.links = [];
-  $scope.places = Data.getData();
-  $scope.input = {
-    link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: ''
-  }
+
+  $scope.$on('$ionicView.enter', function(){
+    $scope.notes = [];
+    $scope.links = [];
+    $scope.places = Data.getData();
+    $scope.input = {
+      link_name: '', url: '', note_text:'', note_type:'', first: '', last: '', place: ''
+    }
+    $scope.input.place=Data.getSelected("places").id+"";
+  })
   $scope.addNote = function(){
     $scope.notes.push({text: $scope.input.note_text, type: $scope.input.note_type})
   }

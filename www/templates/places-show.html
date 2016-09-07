@@ -1,9 +1,23 @@
 <ion-view view-title="Showing Place">
   <ion-content>
-      <div class="bar bar-header bar-stable">
-        <h1 class="title">{{view.place.name}}</h1>
+    <div class="row">
+      <div >
+        <h1 ng-click="view.showOpt=!view.showOpt" ng-show="!view.editing" >{{view.place.name}}</h1>
+        <h1 ng-show="view.editing">
+          <label class="item item-input">
+             <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName"/></span>
+          </label>
+        </h1>
+
+        <button ng-show="view.showOpt" ng-click="edit()" class="button button-balanced">
+          Edit
+        </button>
+        <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive">
+          Delete
+        </button>
       </div>
-      <div class="bar bar-header item-input-inset">
+    </div>
+      <div class="bar item-input-inset">
         <div class="row" style="padding-top:30px">
           <div class="col">
             <label class="item item-input item-select">
@@ -56,6 +70,10 @@
         <a ng-repeat="person in view.place.people | placeSearch : view.search" class="item" ng-click="display(person)">
           {{person.first_name}} {{person.last_name}}
         </a>
+        <div>
+
+          <button ng-click="addPerson()">+</button>
+        </div>
       </div>
   </ion-content>
 </ion-view>
