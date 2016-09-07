@@ -31,7 +31,7 @@ angular.module('starter.controllers', [])
         console.log($scope.view.places);
       })
     }
-    
+
     $scope.update=function(){
       $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
@@ -105,7 +105,9 @@ angular.module('starter.controllers', [])
 .controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, User, Data,  $location, $state){
   console.log("in this controller...");
   $scope.view={}
+  $scope.view.search={}
   $scope.$on('$ionicView.enter',function(){
+
     $scope.view.place=Data.getSelected("places");
     console.log($scope.view.place);
 

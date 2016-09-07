@@ -4,20 +4,56 @@
         <h1 class="title">{{view.place.name}}</h1>
       </div>
       <div class="bar bar-header item-input-inset">
-        <label class="item-input-wrapper">
-          <i class="icon ion-ios-search placeholder-icon"></i>
-          <input type="search" ng-model="view.search" placeholder="Search">
-        </label>
-        <button class="button button-clear">
-          Cancel
-        </button>
+        <div class="row" style="padding-top:30px">
+          <div class="col">
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Search By
+              </div>
+              <select ng-model="view.search.type">
+                <option value="name">Name</option>
+                <option  value="note">Note</option>
+              </select>
+            </label>
+          </div>
+          <div class="col" ng-show="view.search.type==='name'">
+            <label class="item-input-wrapper">
+              <i class="icon ion-ios-search placeholder-icon"></i>
+              <input type="search"  ng-model="view.search.name" placeholder="Name">
+
+            </label>
+            <button class="button button-clear">
+              Cancel
+            </button>
+          </div>
+          <div class="col" ng-show="view.search.type==='note'">
+            <label class="item-input-wrapper">
+              <i class="icon ion-ios-search placeholder-icon"></i>
+              <input type="search"  ng-model="view.search.noteType" placeholder="Note Type">
+
+            </label>
+            <button class="button button-clear">
+              Cancel
+            </button>
+          </div>
+        </div>
+        <div class="row" ng-show="view.search.type==='note'">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search"  ng-model="view.search.text" placeholder="Note Text">
+
+          </label>
+          <button class="button button-clear">
+            Cancel
+          </button>
+        </div>
       </div>
       <div class="list">
         <div class="item item-divider">
-          People
+          People {{view.search.type}}
         </div>
 
-        <a ng-repeat="person in view.place.people" class="item" ng-click="display(person)">
+        <a ng-repeat="person in view.place.people | placeSearch : view.search" class="item" ng-click="display(person)">
           {{person.first_name}} {{person.last_name}}
         </a>
       </div>
