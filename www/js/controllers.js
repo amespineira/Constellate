@@ -2,8 +2,14 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 .controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  $scope.loggedOutRedirect = function(){
+    if (User.active() === false){
+      $state.go("tab.account");
+    }
+  };
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.loggedOutRedirect();
+  });
   console.log("here");
   $scope.controllertest="words";
   $scope.view={}
@@ -48,9 +54,12 @@ angular.module('starter.controllers', [])
 .controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
   $scope.loggedOutRedirect = function(){
     if (User.active() === false){
-      $state.go("tab.account")
+      $state.go("tab.account");
     }
   }
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.loggedOutRedirect();
+  });
   console.log("here");
   $scope.controllertest="words";
   $scope.view={}
