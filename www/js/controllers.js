@@ -2,11 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 .controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
   console.log("here");
@@ -51,13 +46,11 @@ angular.module('starter.controllers', [])
 
 })
 .controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  $scope.loggedOutRedirect = function(){
+    if (User.active() === false){
+      $state.go("tab.account")
+    }
+  }
   console.log("here");
   $scope.controllertest="words";
   $scope.view={}
@@ -158,7 +151,7 @@ angular.module('starter.controllers', [])
     })
   }
 })
-.controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state){
+.controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state, $rootScope){
   console.log("stuff");
 
   $scope.view={}
@@ -184,7 +177,8 @@ angular.module('starter.controllers', [])
         $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
           if(res.data.error!=true){
             console.log(res.data);
-            User.login(res.data)
+            User.login(res.data);
+            $state.go('tab.places');
           }
         })
       }
@@ -210,21 +204,23 @@ angular.module('starter.controllers', [])
         $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
           if(res.data.error!=true){
             console.log(res.data);
-            User.login(res.data)
+            User.login(res.data);
+            $state.go('tab.places');
           }
         })
 
       }
     })
   }
-
 })
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
 .controller('AccountCtrl', function($scope, User, Data) {
-
+  $scope.activeUser = function(){
+    return User.active();
+  };
   $scope.logout=function(){
     User.logout();
     Data.clear();

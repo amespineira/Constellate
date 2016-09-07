@@ -1,11 +1,9 @@
 <ion-view view-title="Account">
   <ion-content>
     <ion-list>
-    <a href="#/tab/account/login" class="button button-calm">Login</a>
-    <button ng-click="logout()" class="button button-calm">
-      Logout
-    </button>
-    <a href="#/tab/account/register" class="button button-calm">Register</a>
+      <a href="#/tab/account/login" class="button button-calm" ng-show='!activeUser()'>Login</a>
+      <button ng-click="logout()" class="button button-calm" ng-show='activeUser()'>Logout</button>
+      <a href="#/tab/account/register" class="button button-calm" ng-show='!activeUser()'>Register</a>
     </ion-list>
   </ion-content>
 </ion-view>

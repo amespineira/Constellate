@@ -1,12 +1,14 @@
 angular.module('starter.services', [])
-.factory('User', function(){
+.factory('User', function($rootScope){
   var user = {
     username:null,
     loggedin:false,
     id:null
   }
-
   return {
+    active: function(){
+        return user.loggedin;
+    },
     getCurrUser: function(){
       return user;
     },
