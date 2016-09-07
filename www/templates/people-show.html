@@ -1,9 +1,32 @@
 <ion-view view-title="Showing Person">
   <ion-content>
-    <div class="item item-divider">
-      {{view.person.first_name}} {{view.person.first_name}}
 
-    </div>
+      <div>
+        <div class="item item-divider" ng-click="view.showOpt=!view.showOpt" ng-show="!view.editing" >
+          {{view.person.first_name}} {{view.person.last_name}}
+        </div>
+        <div class="item item-divider" ng-show="view.editing">
+          <label class="item item-input">
+             <span style="padding-left:10px"> <input name="firstName" type="text" ng-model="view.newFirstName"/></span>
+             <span style="padding-left:10px"> <input name="lastName" type="text" ng-model="view.newLastName"/></span>
+
+          </label>
+          <select ng-model="input.place" ng-options='place as place.name for place in places track by place.id' ng-change="showPopup()" name="place" required>
+            <option value="NEW">+ Create New</option>
+            <option value="" selected>Select a Place</option>
+          </select>
+        </div>
+
+        <button ng-show="view.showOpt && !view.editing" ng-click="edit()" class="button button-balanced">
+          Edit
+        </button>
+        <button ng-show="view.showOpt && view.editing" ng-click="edit()" class="button button-balanced">
+          Save
+        </button>
+        <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive">
+          Delete
+        </button>
+      </div>
       <div class="list">
         <div class="item item-divider">
           Notes
