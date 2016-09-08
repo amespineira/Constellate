@@ -227,7 +227,7 @@ angular.module('starter.controllers', [])
     });
     confirmPopup.then(function(res) {
       if(res) {
-        Links.delete(index);
+        Links.delete(index.link_id);
         $scope.update();
       } else {
         console.log('Nothing happens');
@@ -248,7 +248,6 @@ angular.module('starter.controllers', [])
         console.log(res);
         $scope.update();
       })
-      // "/places/update/:place_id/:token
     }
     $scope.view.editing=!$scope.view.editing
   }
