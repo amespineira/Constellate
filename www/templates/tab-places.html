@@ -14,10 +14,10 @@
       </div>
       <div class="card" ng-repeat="place in view.places | custom: view.search">
         <div class="item item-text-wrap places" ng-click="display(place)">
-          <div style='float: left;'>
+          <div style='margin-top: -8px;'>
             {{place.name | capitalize }}
           </div>
-          <div style="float: right; font-size: 0.8em">
+          <div style="font-size: 0.7em; margin-top: -20px;">
             {{place.people.length}} {{ place.people.length > 1 || place.people.length == 0 ? 'contacts' : 'contact' }}
           </div>
         </div>
