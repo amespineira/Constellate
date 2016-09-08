@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
-.controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
+.controller('PeopleCtrl', function($scope, $http, User, Url, Chats, Data, $state) {
 
   $scope.loggedOutRedirect = function(){
     if (User.active() === false){
@@ -20,7 +20,7 @@ angular.module('starter.controllers', [])
     var user=User.getCurrUser();
     if(user.loggedin===true){
       console.log("loggedin");
-      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+      $http.get(Url.getUrl()+'/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
           //console.log(res.data);
           Data.formatData(res.data)
@@ -33,7 +33,7 @@ angular.module('starter.controllers', [])
     }
 
     $scope.update=function(){
-      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+      $http.get(Url.getUrl()+'/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
         //  console.log(res.data);
           Data.formatData(res.data)
@@ -52,7 +52,7 @@ angular.module('starter.controllers', [])
   }
 
 })
-.controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
+.controller('PlacesCtrl', function($scope, $http, User, Url, Chats, Data, $state) {
   $scope.loggedOutRedirect = function(){
     if (User.active() === false){
       $state.go("main");
@@ -70,7 +70,7 @@ angular.module('starter.controllers', [])
     var user=User.getCurrUser();
     if(user.loggedin===true){
       console.log("loggedin");
-      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+      $http.get(Url.getUrl()+'/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
         //  console.log(res.data);
           Data.formatData(res.data)
@@ -80,7 +80,7 @@ angular.module('starter.controllers', [])
       })
     }
     $scope.addPlace=function(){
-      $http.post('http://localhost:4567/places/'+window.localStorage.getItem('token'), {
+      $http.post(Url.getUrl()+'/places/'+window.localStorage.getItem('token'), {
         name:$scope.view.newName
       }).then(function(res){
         $scope.update();
@@ -88,7 +88,7 @@ angular.module('starter.controllers', [])
       })
     }
     $scope.update=function(){
-      $http.get('http://localhost:4567/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+      $http.get(Url.getUrl()+'/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
         //  console.log(res.data);
           Data.formatData(res.data)
@@ -106,7 +106,7 @@ angular.module('starter.controllers', [])
   return ($scope.view.search===undefined)? true :!(place.name.indexOf($scope.view.search)===-1 )
 }
 })
-.controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state){
+.controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, Url, User, Data, $ionicPopup, $location, $state){
   console.log("in this controller...");
   $scope.view={}
   $scope.view.search={}
@@ -123,7 +123,7 @@ angular.module('starter.controllers', [])
     console.log("this happened");
     if($scope.view.editing===true){
       console.log($scope.view.place.id);
-      $http.post('http://localhost:4567/places/update/'+$scope.view.place.id+"/"+window.localStorage.getItem('token'), {
+      $http.post(Url.getUrl()+'/places/update/'+$scope.view.place.id+"/"+window.localStorage.getItem('token'), {
         name:$scope.view.newName,
       }).then(function(res){
         console.log("made request");
@@ -142,7 +142,7 @@ angular.module('starter.controllers', [])
 
     confirmPopup.then(function(res) {
       if(res) {
-        $http.get('http://localhost:4567/places/delete/'+$scope.view.place.id+"/"+window.localStorage.getItem('token')).then(function(res){
+        $http.get(Url.getUrl()+'/places/delete/'+$scope.view.place.id+"/"+window.localStorage.getItem('token')).then(function(res){
           $state.go("tab.places")
         })
       } else {
@@ -158,7 +158,7 @@ angular.module('starter.controllers', [])
   }
   $scope.update=function(){
     $scope.user=User.getCurrUser();
-    $http.get('http://localhost:4567/users/'+$scope.user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+    $http.get(Url.getUrl()+'/users/'+$scope.user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
       if(res.data.error!=true){
         console.log(res.data);
         Data.formatData(res.data)
@@ -170,7 +170,7 @@ angular.module('starter.controllers', [])
     })
   }
 })
-.controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state){
+.controller('PeopleDisplayCtrl', function($scope, $stateParams, $http,Url, User, Data, $ionicPopup, $location, $state){
   console.log("in the person display controller...");
   $scope.view={}
   $scope.view.search={}
@@ -188,7 +188,7 @@ angular.module('starter.controllers', [])
     $scope.view.newLastName=$scope.view.person.last_name
     $scope.input.place=$scope.places[$scope.view.person.place_id]
     $scope.addNote=function(){
-      $http.post('http://localhost:4567/notes/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
+      $http.post(Url.getUrl()+'/notes/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
         type:$scope.view.newType,
         text:$scope.view.newText
       }).then(function(res){
@@ -198,7 +198,7 @@ angular.module('starter.controllers', [])
       })
     }
     $scope.addLink=function(){
-      $http.post('http://localhost:4567/links/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
+      $http.post(Url.getUrl()+'/links/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
         link_name:$scope.view.newName,
         url:$scope.view.newUrl
       }).then(function(res){
@@ -212,7 +212,7 @@ angular.module('starter.controllers', [])
     console.log("this happened");
     if($scope.view.editing===true){
       console.log($scope.view.person.id);
-      $http.post('http://localhost:4567/people/update/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
+      $http.post(Url.getUrl()+'/people/update/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
         first_name:$scope.view.newFirstName,
         last_name:$scope.view.newLastName,
         place_id:$scope.input.place.id
@@ -261,7 +261,7 @@ angular.module('starter.controllers', [])
 
      confirmPopup.then(function(res) {
        if(res) {
-         $http.get('http://localhost:4567/people/delete/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token')).then(function(res){
+         $http.get('/people/delete/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token')).then(function(res){
            $state.go("tab.people")
          })
        } else {
@@ -269,7 +269,7 @@ angular.module('starter.controllers', [])
      });
    };
   $scope.update=function(){
-    $http.get('http://localhost:4567/users/'+$scope.user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+    $http.get(Url.getUrl()+'/users/'+$scope.user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
       if(res.data.error!=true){
         console.log(res.data);
         Data.formatData(res.data)
@@ -284,7 +284,7 @@ angular.module('starter.controllers', [])
     $state.go('tab.people')
   }
 })
-.controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state, $rootScope){
+.controller('LoginCtrl', function($scope, $stateParams, $http, User, Url, $location, $state, $rootScope){
   $scope.loggedInRedirect = function(){
     if (User.active() === true){
       $state.go("tab.places");
@@ -305,7 +305,7 @@ angular.module('starter.controllers', [])
     console.log($scope.view.username);
     console.log($scope.view.password);
     if ($scope.view.username && $scope.view.password){
-      $http.post('http://localhost:4567/auth/login', {
+      $http.post(Url.getUrl()+'/auth/login', {
         username:$scope.view.username,
         password:$scope.view.password,
       }).then(function(res){
@@ -320,7 +320,7 @@ angular.module('starter.controllers', [])
         else{
           console.log(res.data);
           window.localStorage.setItem("token", res.data);
-          $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
+          $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
             if(res.data.error!=true){
               console.log(res.data);
               User.login(res.data);
@@ -340,7 +340,7 @@ angular.module('starter.controllers', [])
     console.log($scope.view.password);
     console.log($scope.view.accountType);
     if ($scope.view.username && $scope.view.password){
-      $http.post('http://localhost:4567/auth/signup', {
+      $http.post(Url.getUrl()+'/auth/signup', {
         username:$scope.view.username,
         password:$scope.view.password,
       }).then(function(res){
@@ -355,7 +355,7 @@ angular.module('starter.controllers', [])
         else{
           console.log(res.data);
           window.localStorage.setItem("token", res.data);
-          $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
+          $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
             if(res.data.error!=true){
               console.log(res.data);
               User.login(res.data);
@@ -393,7 +393,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('NewPersonCtrl', function($scope, $ionicPopup, $http, Places, People, Notes, Data, Links, User, $state) {
+.controller('NewPersonCtrl', function($scope, $ionicPopup, $http, Places, Url, People, Notes, Data, Links, User, $state) {
   $scope.form = {
     clear: function(){
       $scope.input = {
@@ -427,7 +427,7 @@ angular.module('starter.controllers', [])
     }
   }
   $scope.update = function(){
-    return $http.get('http://localhost:4567/users/'+User.getCurrUser().id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+    return $http.get(Url.getUrl()+'/users/'+User.getCurrUser().id+"/data/"+window.localStorage.getItem('token')).then(function(res){
       if(res.data.error!=true){
         Data.formatData(res.data)
         $scope.places=Data.getData();

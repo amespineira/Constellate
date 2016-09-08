@@ -131,9 +131,9 @@ angular.module('starter.services', [])
     }
   };
 })
-.service("Places", function($http, $window){
+.service("Places", function($http, Url, $window){
   this.addNew = function(data){
-  var url = `http://localhost:4567/places/${window.localStorage.getItem('token')}`
+  var url = `${Url.getUrl()}/places/${window.localStorage.getItem('token')}`
   return $http.post(url, data)
   .success(function(response){
       console.log("created place")
@@ -143,9 +143,9 @@ angular.module('starter.services', [])
     });
   }
 })
-.service("People", function($http, $window){
+.service("People", function($http, Url, $window){
   this.createNew = function(data){
-  var url = `http://localhost:4567/people/${data.place_id}/${window.localStorage.getItem('token')}`
+  var url = `${Url.getUrl()}/people/${data.place_id}/${window.localStorage.getItem('token')}`
   console.log(url);
   return $http.post(url, data)
   .success(function(response){
@@ -156,9 +156,9 @@ angular.module('starter.services', [])
     });
   }
 })
-.service("Notes", function($http, $window){
+.service("Notes", function($http, Url,  $window){
   this.addNew = function(data, person_id){
-  var url = `http://localhost:4567/notes/${person_id}/${window.localStorage.getItem('token')}`
+  var url = `${Url.getUrl()}/notes/${person_id}/${window.localStorage.getItem('token')}`
   return $http.post(url, data)
   .success(function(response){
       console.log("created note")
@@ -168,9 +168,9 @@ angular.module('starter.services', [])
     });
   }
 })
-.service("Links", function($http, $window){
+.service("Links", function($http, $window, Url){
   this.addNew = function(data, person_id){
-  var url = `http://localhost:4567/links/${person_id}/${window.localStorage.getItem('token')}`
+  var url = `${Url.getUrl()}/links/${person_id}/${window.localStorage.getItem('token')}`
   return $http.post(url, data)
   .success(function(response){
       console.log("link note")
@@ -178,5 +178,19 @@ angular.module('starter.services', [])
   .error(function (error, status){
       console.log(error, status);
     });
+  }
+})
+.service("Url", function(){
+  var enviroment="production"
+  return {
+    getUrl : function(){
+      switch(enviroment){
+        case "production":
+          return "https://ancient-sierra-76429.herokuapp.com"
+          break;
+        case "development":
+        return "http://localhost:4567"
+      }
+    }
   }
 })

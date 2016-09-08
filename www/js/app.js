@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters'])
 
-.run(function($ionicPlatform, $http, $state, User) {
+.run(function($ionicPlatform, $http, $state, Url, User) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       StatusBar.styleDefault();
     }
     if(window.localStorage.getItem('token')){
-        $http.get('http://localhost:4567/users/' +window.localStorage.getItem('token')).then(function(res){
+        $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
           if(res.data==='invalid token'){
             window.localStorage.removeItem("token");
           }
