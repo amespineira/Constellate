@@ -120,3 +120,8 @@
 .item-avatar{
   padding-left: 40px;
 }
+
+.places{
+  height: 80px;
+  line-height: 3;
+}
