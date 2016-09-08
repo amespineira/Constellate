@@ -115,22 +115,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-  .state('tab.login', {
-  url: '/account/login',
-  views: {
-    'tab-account': {
+.state('new-person', {
+    url: '/people/new',
+    templateUrl: 'templates/new-person.html',
+    controller: 'NewPersonCtrl'
+  })
+  .state('main', {
+      url: '/',
       templateUrl: 'templates/account-login.html',
       controller: 'LoginCtrl'
-    }
-  }
-})
-.state('new-people', {
-    url: '/people/new',
-    templateUrl: 'templates/new-people.html',
-    controller: 'NewPerson'
-  })
+    })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/places');
+  $urlRouterProvider.otherwise('/');
 
 });

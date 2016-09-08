@@ -2,3 +2,42 @@
 .invalid{
   border-left: 5px solid red;
 }
+
+.main{
+  text-align: center;
+}
+
+.main img{
+  margin-top: 20px;
+  -webkit-filter: invert(100%);
+  -moz-filter: invert(100%);
+  -ms-filter: invert(100%);
+  -o-filter: invert(100%);
+}
+.cust-button, .cust-button:hover{
+  margin-top: -265px;
+  position: relative;
+  padding-left: 40px;
+  padding-right:40px;
+}
+
+.divider{
+  line-height: 4;
+  font-size: 0.8em;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+.sign-button{
+  width: 350px;
+  margin: auto;
+}
+.sign-list{
+  width: 350px;
+  margin: auto;
+  margin-top: -50px;
+}
+
+.sign-button:first-of-type{
+  margin-top: 30px;
+}

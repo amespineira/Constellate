@@ -1,19 +1,25 @@
-<ion-view view-title="Login">
-  <ion-content>
-    <div class="list">
-      <label class="item item-input">
-        <input type="text" placeholder="Username" autocapitalize="none" ng-model="view.username"/>
-      </label>
-      <label class="item item-input">
-        <input type="password" placeholder="Password" ng-model="view.password"/>
-      </label>
-      <button ng-click="login()" class="button button-calm">
-        Login
-      </button>
-      <button ng-click="signup()" class="button button-calm">
-        Register
-      </button>
-      <h1>{{view.errormessage}}</h1>
+<ion-view view-title="Main" hide-nav-bar="true" style="background-color: white;">
+  <ion-content ng-init="loggedInRedirect()">
+    <div class="main">
+      <img src="http://img.ffffound.com/static-data/assets/6/7221a1ff303adcee0c14504427553ffcac5dbd7b_m.gif" alt="mainimg" />
+      <div class="list sign-list">
+        <label class="item item-input">
+          <input type="text" placeholder="Username" autocapitalize="none" ng-model="view.username"/>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password" ng-model="view.password"/>
+        </label>
+        <button ng-click="login()" class="button button-calm sign-button">
+          Log In
+        </button>
+        <div class="divider">
+          &#8212; or &#8212;
+        </div>
+        <button ng-click="signup()" class="button button-calm sign-button">
+          Sign Up
+        </button>
+        <h1>{{view.errormessage}}</h1>
+      </div>
     </div>
   </ion-content>
 </ion-view>

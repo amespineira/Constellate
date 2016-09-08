@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 .controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
   $scope.loggedOutRedirect = function(){
     if (User.active() === false){
-      $state.go("tab.account");
+      $state.go("main");
     }
   };
   $scope.$on('$ionicView.enter', function(e) {
@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
       })
     }
     $scope.addPerson = function(){
-      $state.go("new-people");
+      $state.go("new-person");
     }
   });
   $scope.display=function(person){
@@ -54,7 +54,7 @@ angular.module('starter.controllers', [])
 .controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
   $scope.loggedOutRedirect = function(){
     if (User.active() === false){
-      $state.go("tab.account");
+      $state.go("main");
     }
   }
   $scope.$on('$ionicView.enter', function(e) {
@@ -149,7 +149,7 @@ angular.module('starter.controllers', [])
     });
   };
   $scope.addPerson=function(){
-    $state.go("new-people")
+    $state.go("new-person")
   }
   $scope.display=function(person){
     Data.setSelected("people", person.people_id)
@@ -283,7 +283,7 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state, $rootScope){
   $scope.loggedInRedirect = function(){
     if (User.active() === true){
-      $state.go("tab.account");
+      $state.go("tab.places");
     }
   }
   $scope.$on('$ionicView.enter', function(e) {
@@ -370,20 +370,26 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, User, Data) {
-  $scope.activeUser = function(){
-    return User.active();
-  };
+.controller('AccountCtrl', function($scope, User, Data, $state) {
+  $scope.$on('$ionicView.enter', function(){
+    $scope.loggedOutRedirect = function(){
+      if (User.active() === false){
+        $state.go("main");
+      }
+    }
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.loggedOutRedirect();
+    });
+  });
   $scope.logout=function(){
     User.logout();
     Data.clear();
     window.localStorage.removeItem("token");
+    $state.go('main')
   }
 })
 
-.controller('NewPerson', function($scope, $ionicPopup, $http, $timeout, Places, People, Notes, Data, Links, User, $state) {
-
-
+.controller('NewPersonCtrl', function($scope, $ionicPopup, $http, Places, People, Notes, Data, Links, User, $state) {
   $scope.form = {
     clear: function(){
       $scope.input = {
