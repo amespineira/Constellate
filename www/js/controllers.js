@@ -2,6 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 .controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
+
   $scope.loggedOutRedirect = function(){
     if (User.active() === false){
       $state.go("main");
@@ -278,6 +279,9 @@ angular.module('starter.controllers', [])
       }
       console.log($scope.view.places);
     })
+  }
+  $scope.goToPeople=function(){
+    $state.go('tab.people')
   }
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state, $rootScope){
