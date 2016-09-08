@@ -12,7 +12,7 @@
         <div class="input-label">
           Place
         </div>
-        <select ng-model="input.place" ng-options='place as place.name for place in places track by place.id' ng-change="showPopup()" name="place" required>
+        <select ng-model="input.place" ng-options='place as (place.name | capitalize) for place in places track by place.id' ng-change="showPopup()" name="place" required>
           <option value="NEW">+ Create New</option>
           <option value="" selected>Select a Place</option>
         </select>

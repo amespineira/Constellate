@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
-.controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state) {
+.controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state, $filter) {
   $scope.loggedOutRedirect = function(){
     if (User.active() === false){
       $state.go("main");
@@ -51,7 +51,7 @@ angular.module('starter.controllers', [])
   }
 
 })
-.controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state) {
+.controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state, $filter) {
   $scope.loggedOutRedirect = function(){
     if (User.active() === false){
       $state.go("main");
@@ -169,7 +169,7 @@ angular.module('starter.controllers', [])
     })
   }
 })
-.controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state){
+.controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state, $filter){
   console.log("in the person display controller...");
   $scope.view={}
   $scope.view.search={}
@@ -371,7 +371,14 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AccountCtrl', function($scope, User, Data, $state) {
+  $scope.getUsername = function(){
+    if (User.getCurrUser().username !== null){
+      $scope.user = User.getCurrUser().username;
+    }
+  }
+  $scope.user = '';
   $scope.$on('$ionicView.enter', function(){
+    $scope.getUsername();
     $scope.loggedOutRedirect = function(){
       if (User.active() === false){
         $state.go("main");

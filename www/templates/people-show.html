@@ -3,7 +3,7 @@
 
       <div>
         <div class="item item-divider" ng-click="view.showOpt=!view.showOpt" ng-show="!view.editing" >
-          {{view.person.first_name}} {{view.person.last_name}}
+          {{view.person.first_name | capitalize}} {{view.person.last_name | capitalize}}
         </div>
         <div class="item item-divider" ng-show="view.editing">
           <label class="item item-input">

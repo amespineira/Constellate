@@ -1,7 +1,12 @@
 <ion-view view-title="Account">
-  <ion-content>
+  <ion-content ng-init='getUsername()'>
+    <ul class="list">
+      <li class="item" ng-model='user'>
+        Logged in as: {{user}}
+      </li>
+    </ul>
     <ion-list>
-      <button ng-click="logout()" class="button button-calm">Logout</button>
+      <button ng-click="logout()" class="button button-full button-calm">Logout</button>
     </ion-list>
   </ion-content>
 </ion-view>

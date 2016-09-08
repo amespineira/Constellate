@@ -2,7 +2,7 @@
   <ion-content>
     <div class="row">
       <div >
-        <h1 ng-click="view.showOpt=!view.showOpt" ng-show="!view.editing" >{{view.place.name}}</h1>
+        <h1 class="placeTitle" ng-click="view.showOpt=!view.showOpt" ng-show="!view.editing" >{{view.place.name | capitalize}}</h1>
         <h1 ng-show="view.editing">
           <label class="item item-input">
              <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName"/></span>
@@ -70,7 +70,7 @@
         </div>
 
         <a ng-repeat="person in view.place.people | placeSearch : view.search" class="item" ng-click="display(person)">
-          {{person.first_name}} {{person.last_name}}
+          {{person.first_name | capitalize}} {{person.last_name | capitalize}}
         </a>
         <div>
 
