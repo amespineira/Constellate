@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.filters'])
 
-.run(function($ionicPlatform, $http, User) {
+.run(function($ionicPlatform, $http, $state, User) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -27,6 +27,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           }
           else{
             User.login(res.data)
+            $state.go('people')
           }
         })
     }
@@ -70,7 +71,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
     .state('tab.places-show', {
-        url: '/places/show/',
+        url: '/placesShow/',
         views: {
           'tab-places': {
             templateUrl: 'templates/places-show.html',
@@ -88,7 +89,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
       })
       .state('tab.people-show', {
-          url: '/people/show/',
+          url: '/peopleShow/',
           views: {
             'tab-people': {
               templateUrl: 'templates/people-show.html',

@@ -59,3 +59,64 @@
   display: inline-block;
   margin-right: 25px;
 }
+.searchBy{
+  height: 35px;
+}
+
+.dataTitle{
+  display: inline-block;
+  width: 20%;
+  line-height: 2.5;
+}
+
+.dataInput{
+  background-color: transparent;
+  float: right;
+  display: inline-block;
+  width: 60%;
+  border: none;
+}
+
+.dataField{
+  background-color: white;
+  width: 40%;
+  display: inline-block;
+}
+
+.dataDiv{
+  height: 55px;
+}
+
+.notes{
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.links:first-of-type{
+  margin-top: 20px;
+}
+
+.links{
+  margin-left: 15px;
+  display: block;
+  font-size: 0.9em;
+}
+
+.link{
+  display: inline-block;
+}
+.linkName{
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.noItems{
+  margin: 20px;
+}
+
+.item-avatar{
+  padding-left: 40px;
+}

@@ -167,6 +167,16 @@ angular.module('starter.services', [])
       console.log(error, status);
     });
   }
+  this.delete = function(id){
+  var url = `http://localhost:4567/notes/${id}/delete/${window.localStorage.getItem('token')}`
+  return $http.post(url)
+  .success(function(response){
+      console.log(response)
+  })
+  .error(function (error, status){
+      console.log(error, status);
+    });
+  }
 })
 .service("Links", function($http, $window){
   this.addNew = function(data, person_id){
@@ -174,6 +184,17 @@ angular.module('starter.services', [])
   return $http.post(url, data)
   .success(function(response){
       console.log("link note")
+  })
+  .error(function (error, status){
+      console.log(error, status);
+    });
+  }
+  this.delete = function(id){
+  var url = `http://localhost:4567/links/${id}/delete/${window.localStorage.getItem('token')}`
+  console.log(url);
+  return $http.post(url)
+  .success(function(response){
+      console.log(response)
   })
   .error(function (error, status){
       console.log(error, status);

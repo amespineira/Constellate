@@ -169,7 +169,7 @@ angular.module('starter.controllers', [])
     })
   }
 })
-.controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state, $filter){
+.controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state, $filter, Links, Notes){
   console.log("in the person display controller...");
   $scope.view={}
   $scope.view.search={}
@@ -206,6 +206,34 @@ angular.module('starter.controllers', [])
         $scope.view.newUrl=''
       })
     }
+    $scope.showConfirmNote = function(index) {
+     var confirmPopup = $ionicPopup.confirm({
+       title: 'Delete Note',
+       template: 'Are you sure you want to remove this note?'
+     });
+     confirmPopup.then(function(res) {
+       if(res) {
+         Notes.delete(index);
+         $scope.update();
+       } else {
+         console.log('Nothing happens');
+       }
+     });
+   };
+   $scope.showConfirmLink = function(index) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Delete Link',
+      template: 'Are you sure you want to remove this link?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        Links.delete(index);
+        $scope.update();
+      } else {
+        console.log('Nothing happens');
+      }
+    });
+  };
   })
   $scope.edit=function(){
     console.log("this happened");
@@ -278,6 +306,9 @@ angular.module('starter.controllers', [])
       }
       console.log($scope.view.places);
     })
+  }
+  $scope.goToPeople=function(){
+    $state.go('tab.people')
   }
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, $location, $state, $rootScope){

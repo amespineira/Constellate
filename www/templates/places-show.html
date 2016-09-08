@@ -1,7 +1,7 @@
 <ion-view view-title="Showing Place">
   <ion-content>
     <div class="row">
-      <div >
+      <div>
         <h1 class="placeTitle" ng-click="view.showOpt=!view.showOpt" ng-show="!view.editing" >{{view.place.name | capitalize}}</h1>
         <h1 ng-show="view.editing">
           <label class="item item-input">
@@ -19,10 +19,10 @@
         </button>
       </div>
     </div>
-      <div class="bar item-input-inset">
-        <div class="row" style="padding-top:30px">
+      <div class="item-input-inset">
+        <div class="row" style="padding-top:10px">
           <div class="col">
-            <label class="item item-input item-select">
+            <label class="item item-input item-select searchBy">
               <div class="input-label">
                 Search By
               </div>
@@ -33,49 +33,28 @@
             </label>
           </div>
           <div class="col" ng-show="view.search.type==='name'">
-            <label class="item-input-wrapper">
+            <label class="item-input-wrapper searchBy">
               <i class="icon ion-ios-search placeholder-icon"></i>
               <input type="search"  ng-model="view.search.name" placeholder="Name">
-
             </label>
-            <button class="button button-clear">
-              Cancel
-            </button>
           </div>
           <div class="col" ng-show="view.search.type==='note'">
-            <label class="item-input-wrapper">
+            <label class="item-input-wrapper searchBy">
               <i class="icon ion-ios-search placeholder-icon"></i>
-              <input type="search"  ng-model="view.search.noteType" placeholder="Note Type">
-
+              <input type="search"  ng-model="view.search.text" placeholder="Note Text"/>
             </label>
-            <button class="button button-clear">
-              Cancel
-            </button>
           </div>
-        </div>
-        <div class="row" ng-show="view.search.type==='note'">
-          <label class="item-input-wrapper">
-            <i class="icon ion-ios-search placeholder-icon"></i>
-            <input type="search"  ng-model="view.search.text" placeholder="Note Text">
-
-          </label>
-          <button class="button button-clear">
-            Cancel
-          </button>
         </div>
       </div>
       <div class="list">
         <div class="item item-divider">
           People {{view.search.type}}
         </div>
+        <button class="button button-full" ng-click="addPerson()">+ Add New</button>
 
         <a ng-repeat="person in view.place.people | placeSearch : view.search" class="item" ng-click="display(person)">
           {{person.first_name | capitalize}} {{person.last_name | capitalize}}
         </a>
-        <div>
-
-          <button ng-click="addPerson()">+</button>
-        </div>
       </div>
   </ion-content>
 </ion-view>
