@@ -58,8 +58,8 @@
                 <button class="button button-small" ng-click="addLink()">+</button>
               </div>
             </div>
-            <a ng-repeat="link in view.person.links" class="subdued links" ng-click="showConfirmLink(link.id)">
-              <p class="link linkName">
+            <a ng-repeat="link in view.person.links" class="subdued links">
+              <p class="link linkName" ng-click="showConfirmLink(link)">
                 {{link.name | capitalize}}
               </p>
               <p class="link linkURL" href="{{link.url}}">
