@@ -313,8 +313,18 @@ angular.module('starter.controllers', [])
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, Url, $location, $state, $rootScope){
   $scope.loggedInRedirect = function(){
-    if (User.active() === true){
-      $state.go("tab.places");
+    if(window.localStorage.getItem('token')){
+      console.log(window.localStorage.getItem('token'));
+        $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
+          if(res.data==='invalid token'){
+            window.localStorage.removeItem("token");
+          }
+          else{
+            console.log("here");
+            User.login(res.data)
+            $state.go('tab.people')
+          }
+        })
     }
   }
   $scope.$on('$ionicView.enter', function(e) {
@@ -345,9 +355,12 @@ angular.module('starter.controllers', [])
           User.showAlert("Invalid username/password combination")
         }
         else{
+          $scope.view.password=null;
+          $scope.view.username=null;
           console.log(res.data);
           window.localStorage.setItem("token", res.data);
           $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
+
             if(res.data.error!=true){
               console.log(res.data);
               User.login(res.data);

@@ -20,17 +20,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    if(window.localStorage.getItem('token')){
-        $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
-          if(res.data==='invalid token'){
-            window.localStorage.removeItem("token");
-          }
-          else{
-            User.login(res.data)
-            $state.go('people')
-          }
-        })
-    }
+  
   });
 })
 
