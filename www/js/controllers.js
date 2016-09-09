@@ -113,6 +113,9 @@ angular.module('starter.controllers', [])
     $scope.places["0"] = {id: "NEW", name: "+ Add New Place"}
     $scope.input={}
     $scope.view.person=Data.getSelected("people");
+    $scope.view.types={};
+    $scope.update();
+    console.log($scope.view.types);
     $scope.view.newFirstName=$scope.view.person.first_name
     $scope.view.newLastName=$scope.view.person.last_name
     $scope.input.place=$scope.places[$scope.view.person.place_id]
@@ -217,8 +220,19 @@ angular.module('starter.controllers', [])
    };
   $scope.update=function(){
     Data.update().then(function(){
+      $scope.view.types={};
+
         $scope.view.places=Data.getData();
         $scope.view.person=Data.getSelected("people");
+        $scope.view.person.notes.forEach(function(note){
+          if(!$scope.view.types[note.type]){
+            $scope.view.types[note.type]={
+              type: note.type,
+              notes: []
+            }
+          }
+          $scope.view.types[note.type].notes.push(note);
+        })
     })
   }
   $scope.goToPeople=function(){
