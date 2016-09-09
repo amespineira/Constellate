@@ -21,6 +21,38 @@ angular.module('starter.filters',[])
     return result;
   }
 })
+.filter('allSearch', function() {
+  return function(input, search) {
+    if (!input || !search) return input;
+
+    var result = {};
+    console.log(search);
+
+    var expected = ('' + search).toLowerCase();
+    var noteTextCheck=function(note, expectedText){
+      return note.text.toLowerCase().indexOf(expectedText) !==-1
+    }
+
+    var noteTypeCheck= function(note, expectedType){
+      return note.type.toLowerCase().indexOf(expectedType) !==-1
+    }
+    angular.forEach(input, function(value, key) {
+        var actual = ('' + value.first_name+" "+value.last_name).toLowerCase();
+        if (actual.indexOf(expected) !== -1) {
+          result[key] = value;
+        }
+        angular.forEach(value.notes, function(note) {
+          if (noteTypeCheck(note, expected) || noteTextCheck(note, expected)) {
+            result[key] = value;
+          }
+        })
+    })
+
+
+
+    return result;
+  }
+})
 .filter('placeSearch', function() {
   return function(input, search) {
     if (!input || !search.type) return input;
