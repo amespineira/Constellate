@@ -1,6 +1,6 @@
 <ion-view view-title="NewPerson">
   <ion-content>
-    <form ng-submit='submitNew(); personForm.$setPristine(); form.clear(); peopleRedirect()' name="personForm">
+    <form ng-submit='submitNew(); personForm.$setPristine(); form.clear();' name="personForm">
     <div class="list">
       <label class="item item-input" ng-class="{invalid: personForm.fname.$invalid && personForm.fname.$dirty}">
         <input type="text" placeholder="First Name" ng-model='input.first' name="fname" required ng-minlength=2>

@@ -19,29 +19,29 @@
         </button>
       </div>
     </div>
-      <div class="item-input-inset">
+      <div>
         <div  style="padding-top:10px">
-          <div class="row">
-            <div class="col">
+          <!-- <div class="row"> -->
               <label class="item item-input item-select searchBy">
                 <div class="input-label">
                   Search By
                 </div>
-                <select ng-model="view.search.type">
-                  <option value="name">Name</option>
-                  <option  value="note">Note</option>
-                </select>
+
+                  <select ng-model="view.search.type">
+                    <option selected value="name">Name</option>
+                    <option  value="note">Note</option>
+                  </select>
               </label>
-            </div>
-          </div>
+
+          <!-- </div> -->
           <div class="row">
-            <div class="col" ng-show="view.search.type==='name'">
+            <div class="item item-input-inset col" ng-show="view.search.type==='name'">
               <label class="item-input-wrapper searchBy">
                 <i class="icon ion-ios-search placeholder-icon"></i>
                 <input type="search"  ng-model="view.search.name" placeholder="Name">
               </label>
             </div>
-            <div class="col" ng-show="view.search.type==='note'">
+            <div class="item item-input-inset col" ng-show="view.search.type==='note'">
               <label class="item-input-wrapper">
                 <i class="icon ion-ios-search placeholder-icon"></i>
                 <input type="search"  ng-model="view.search.noteType" placeholder="Note Type">
@@ -50,8 +50,7 @@
               <button class="button button-clear">
                 Cancel
               </button>
-            </div>
-            <div class="col" ng-show="view.search.type==='note'">
+
               <label class="item-input-wrapper searchBy">
                 <i class="icon ion-ios-search placeholder-icon"></i>
                 <input type="search"  ng-model="view.search.text" placeholder="Note Text"/>

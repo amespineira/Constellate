@@ -1,5 +1,5 @@
 angular.module('starter.services', [])
-.factory('User', function($rootScope, $ionicPopup){
+.factory('User', function($rootScope, $state, $ionicPopup){
   var user = {
     username:null,
     loggedin:false,
@@ -26,10 +26,16 @@ angular.module('starter.services', [])
       var alertPopup = $ionicPopup.alert({
         title: text
       });
+    },
+    loggedOutRedirect:function(){
+      if (!user.loggedin){
+        console.log("this");
+        $state.go("main");
+      }
     }
   }
 })
-.factory('Data', function(){
+.factory('Data', function(User, Url, $http){
   var data={
     places:{},
     people:{}
@@ -38,22 +44,25 @@ angular.module('starter.services', [])
     place:null,
 
   }
+  function formatData(apiData) {
+    data.places={};
+    data.people={};
+    apiData.places.forEach(function(place){
+      data.places[Number(place.id)]={
+        id:Number(place.id),
+        name:place.name,
+        people:[]
+      };
+    })
+    apiData.people.forEach(function(person){
+      data.people[Number(person.people_id)]=person
+      data.places[Number(person.place_id)].people.push(data.people[Number(person.people_id)]);
+    })
+
+  }
   return {
     formatData: function(apiData){
-      data.places={};
-      data.people={};
-      apiData.places.forEach(function(place){
-        data.places[Number(place.id)]={
-          id:Number(place.id),
-          name:place.name,
-          people:[]
-        };
-      })
-      apiData.people.forEach(function(person){
-        data.people[Number(person.people_id)]=person
-        data.places[Number(person.place_id)].people.push(data.people[Number(person.people_id)]);
-      })
-
+      formatData(apiData);
     },
     getData: function(){
       return data.places;
@@ -80,7 +89,18 @@ angular.module('starter.services', [])
         place:null,
 
       }
+    },
+    update: function(){
+      var user=User.getCurrUser();
+      return $http.get(Url.getUrl()+'/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
+        if(res.data.error!=true){
+        //  console.log(res.data);
+        console.log(this);
+          formatData(res.data)
+        }
+      })
     }
+
   }
 })
 .factory('Chats', function() {
@@ -143,24 +163,36 @@ angular.module('starter.services', [])
     });
   }
 })
-.service("People", function($http, Url, $window){
+.service("People", function($http, Url,  Notes, Links,  $window){
   this.createNew = function(data){
   var url = `${Url.getUrl()}/people/${data.place_id}/${window.localStorage.getItem('token')}`
   console.log(url);
   return $http.post(url, data)
   .success(function(response){
+    console.log("success");
+
       console.log("created person")
   })
   .error(function (error, status){
       console.log(error, status);
-    });
+  }).then(function(res){
+      data.notes.forEach(function(note){
+        Notes.addNew(note, res.data).then(function(res){
+        })
+      })
+      data.links.forEach(function(link){
+        Links.addNew(link, res.data).then(function(res){
+        });
+      })
+    })
   }
 })
-.service("Notes", function($http, Url,  $window){
+.service("Notes", function($http, Url, $window){
   this.addNew = function(data, person_id){
   var url = `${Url.getUrl()}/notes/${person_id}/${window.localStorage.getItem('token')}`
   return $http.post(url, data)
   .success(function(response){
+
       console.log("created note")
   })
   .error(function (error, status){
