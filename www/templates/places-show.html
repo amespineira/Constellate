@@ -1,24 +1,25 @@
-<ion-view view-title="Showing Place">
+<ion-view view-title="Place">
   <ion-content>
-    <div class="row">
-      <div>
-        <h1 class="placeTitle" ng-click="view.showOpt=!view.showOpt" ng-show="!view.editing" >{{view.place.name | capitalize}}</h1>
-        <h1 ng-show="view.editing">
-          <label class="item item-input">
-             <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName"/></span>
-          </label>
-        </h1>
-        <button ng-show="view.showOpt && !view.editing" ng-click="edit()" class="button button-balanced">
-          Edit
-        </button>
-        <button ng-show="view.showOpt && view.editing" ng-click="edit()" class="button button-balanced">
-          Save
-        </button>
-        <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive">
-          Delete
-        </button>
-      </div>
-    </div>
+    <div class="list card placesList">
+        <div class="item item-avatar" ng-show="!view.editing" style="text-align: center">
+            <div class="TitlePeopleShow">
+              <h2 style="font-size: 1.2em; font-weight: bold; line-height:2">
+                {{view.place.name | capitalize}}
+                <div class="ion-edit iconEdit" ng-click="view.showOpt=!view.showOpt; edit()" ng-show="!view.editing"></div>
+              </h2>
+            </div>
+          </div>
+          <h1 ng-show="view.editing" class="item item-input-inset" style="display: inline-block; border:none; width:80%;">
+            <label class="item-input-wrapper">
+               <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName"/></span>
+            </label>
+          </h1>
+          <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive editDelete ion-trash-a" style="font-size: 1.2em;">
+          </button>
+          <button ng-show="view.showOpt && view.editing" ng-click="edit(); view.showOpt=!view.showOpt" class="button button-balanced editDelete">
+            Save
+          </button>
+        </div>
       <div class="item-input-inset">
         <div  style="padding-top:10px">
           <div class="row">

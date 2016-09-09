@@ -7,10 +7,10 @@
         </label>
       </div>
       <div style='text-align: center;'>
-        <label class="item item-input" style='width: 85%; display: inline-block;'>
+        <label class="item item-input" style='width: 80%; display: inline-block;'>
            <span style="padding-left:10px; display: inline-block;"> <input name="name" type="text" ng-model="view.newName" placeholder="New Place"/></span>
         </label>
-        <button class="button button-positive" ng-click="addPlace()">+</button>
+        <button class="button button-positive" style='display: inline-block;' ng-click="addPlace()">+</button>
       </div>
       <div class="card" ng-repeat="place in view.places | custom: view.search">
         <div class="item item-text-wrap places" ng-click="display(place)">
