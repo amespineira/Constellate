@@ -20,47 +20,46 @@
             Save
           </button>
         </div>
-      <div class="item-input-inset">
-        <div  style="padding-top:10px">
-          <div class="row">
-            <div class="col">
-              <label class="item item-input item-select searchBy">
-                <div class="input-label">
-                  Search By
-                </div>
-                <select ng-model="view.search.type">
-                  <option value="name">Name</option>
-                  <option  value="note">Note</option>
-                </select>
-              </label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col" ng-show="view.search.type==='name'">
-              <label class="item-input-wrapper searchBy">
-                <i class="icon ion-ios-search placeholder-icon"></i>
-                <input type="search"  ng-model="view.search.name" placeholder="Name">
-              </label>
-            </div>
-            <div class="col" ng-show="view.search.type==='note'">
-              <label class="item-input-wrapper">
-                <i class="icon ion-ios-search placeholder-icon"></i>
-                <input type="search"  ng-model="view.search.noteType" placeholder="Note Type">
+        <div>
+          <div  style="padding-top:10px">
+            <!-- <div class="row"> -->
+                <label class="item item-input item-select searchBy">
+                  <div class="input-label">
+                    Search By
+                  </div>
 
-              </label>
-              <button class="button button-clear">
-                Cancel
-              </button>
-            </div>
-            <div class="col" ng-show="view.search.type==='note'">
-              <label class="item-input-wrapper searchBy">
-                <i class="icon ion-ios-search placeholder-icon"></i>
-                <input type="search"  ng-model="view.search.text" placeholder="Note Text"/>
-              </label>
+                    <select ng-model="view.search.type">
+                      <option selected value="name">Name</option>
+                      <option  value="note">Note</option>
+                    </select>
+                </label>
+
+            <!-- </div> -->
+            <div class="row">
+              <div class="item item-input-inset col" ng-show="view.search.type==='name'">
+                <label class="item-input-wrapper searchBy">
+                  <i class="icon ion-ios-search placeholder-icon"></i>
+                  <input type="search"  ng-model="view.search.name" placeholder="Name">
+                </label>
+              </div>
+              <div class="item item-input-inset col" ng-show="view.search.type==='note'">
+                <label class="item-input-wrapper">
+                  <i class="icon ion-ios-search placeholder-icon"></i>
+                  <input type="search"  ng-model="view.search.noteType" placeholder="Note Type">
+
+                </label>
+                <button class="button button-clear">
+                  Cancel
+                </button>
+
+                <label class="item-input-wrapper searchBy">
+                  <i class="icon ion-ios-search placeholder-icon"></i>
+                  <input type="search"  ng-model="view.search.text" placeholder="Note Text"/>
+                </label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       <div class="list">
         <div class="item item-divider">
           People
