@@ -1,4 +1,4 @@
-<ion-view view-title="People">
+<ion-view view-title="People" >
   <ion-content ng-init='loggedOutRedirect()'>
     <div class="bar bar-header item-input-inset">
       <label class="item-input-wrapper">
@@ -7,13 +7,15 @@
       </label>
     </div>
     <button class="button button-full" ng-click="addPerson()">+ Add New</button>
-    <div class="card" ng-repeat="person in view.people | custom: view.search">
+    <div class="card" ng-repeat="person in view.people | allSearch: view.search">
       <div class="item item-divider" ng-click="display(person)">
           {{person.first_name | capitalize}} {{person.last_name | capitalize}}
       </div>
       <div class="item item-text-wrap">
         Met at {{view.places[person.place_id].name | capitalize}}
       </div>
+
+        <button type="button" ng-repeat="note in person.notes" class="button button-small button-balanced notes" ng-click="showConfirmNote(note.id)">{{note.type}}</button>
     </div>
   </ion-content>
 </ion-view>
