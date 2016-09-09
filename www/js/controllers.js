@@ -6,8 +6,6 @@ angular.module('starter.controllers', [])
   $scope.controllertest="words";
   $scope.view={}
   $scope.$on('$ionicView.enter', function(e) {
-    console.log("here");
-    console.log(User);
     User.loggedOutRedirect();
     var user=User.getCurrUser();
     $scope.update();
@@ -32,8 +30,6 @@ angular.module('starter.controllers', [])
   $scope.controllertest="words";
   $scope.view={}
   $scope.$on('$ionicView.enter', function(e) {
-    console.log("here");
-    console.log(User);
     User.loggedOutRedirect();
     var user=User.getCurrUser();
     $scope.update();
@@ -57,7 +53,6 @@ angular.module('starter.controllers', [])
   }
 })
 .controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, Url, User, Data, $ionicPopup, $location, $state){
-  console.log("in this controller...");
   $scope.view={}
   $scope.view.search={}
   $scope.view.showOpt=false;
@@ -66,18 +61,13 @@ angular.module('starter.controllers', [])
 
     $scope.view.place=Data.getSelected("places");
     $scope.view.newName=$scope.view.place.name
-    console.log($scope.view.place);
 
   })
   $scope.edit=function(){
-    console.log("this happened");
     if($scope.view.editing===true){
-      console.log($scope.view.place.id);
       $http.post(Url.getUrl()+'/places/update/'+$scope.view.place.id+"/"+window.localStorage.getItem('token'), {
         name:$scope.view.newName,
       }).then(function(res){
-        console.log("made request");
-        console.log(res);
         $scope.update();
       })
       // "/places/update/:place_id/:token
@@ -95,7 +85,6 @@ angular.module('starter.controllers', [])
         $http.get(Url.getUrl()+'/places/delete/'+$scope.view.place.id+"/"+window.localStorage.getItem('token')).then(function(res){
           $state.go("tab.places")
         })
-      } else {
       }
     });
   };
@@ -110,12 +99,10 @@ angular.module('starter.controllers', [])
     Data.update().then(function(){
         $scope.view.places=Data.getData();
         $scope.view.place=Data.getSelected("places");
-      console.log($scope.view.places);
     })
   }
 })
 .controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state, $filter, Links, Notes, Url){
-  console.log("in the person display controller...");
   $scope.view={}
   $scope.view.search={}
   $scope.view.showOpt=false;
@@ -125,9 +112,7 @@ angular.module('starter.controllers', [])
     $scope.places = Data.getData();
     $scope.places["0"] = {id: "NEW", name: "+ Add New Place"}
     $scope.input={}
-    console.log($scope.view.place);
     $scope.view.person=Data.getSelected("people");
-    console.log($scope.view.person);
     $scope.view.newFirstName=$scope.view.person.first_name
     $scope.view.newLastName=$scope.view.person.last_name
     $scope.input.place=$scope.places[$scope.view.person.place_id]
@@ -160,8 +145,6 @@ angular.module('starter.controllers', [])
        if(res) {
          Notes.delete(index);
          $scope.update();
-       } else {
-         console.log('Nothing happens');
        }
      });
    };
@@ -174,23 +157,17 @@ angular.module('starter.controllers', [])
       if(res) {
         Links.delete(index.link_id);
         $scope.update();
-      } else {
-        console.log('Nothing happens');
       }
     });
   };
   })
   $scope.edit=function(){
-    console.log("this happened");
     if($scope.view.editing===true){
-      console.log($scope.view.person.id);
       $http.post(Url.getUrl()+'/people/update/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token'), {
         first_name:$scope.view.newFirstName,
         last_name:$scope.view.newLastName,
         place_id:$scope.input.place.id
       }).then(function(res){
-        console.log("made request");
-        console.log(res);
         $scope.update();
       })
     }
@@ -235,7 +212,6 @@ angular.module('starter.controllers', [])
          $http.get(Url.getUrl()+'/people/delete/'+$scope.view.person.people_id+"/"+window.localStorage.getItem('token')).then(function(res){
            $state.go("tab.people")
          })
-       } else {
        }
      });
    };
@@ -243,7 +219,6 @@ angular.module('starter.controllers', [])
     Data.update().then(function(){
         $scope.view.places=Data.getData();
         $scope.view.person=Data.getSelected("people");
-      console.log($scope.view.places);
     })
   }
   $scope.goToPeople=function(){
@@ -253,13 +228,11 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, Url, $location, $state, $rootScope){
   $scope.loggedInRedirect = function(){
     if(window.localStorage.getItem('token')){
-      console.log(window.localStorage.getItem('token'));
         $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
           if(res.data==='invalid token'){
             window.localStorage.removeItem("token");
           }
           else{
-            console.log("here");
             User.login(res.data)
             $state.go('tab.people')
           }
@@ -267,19 +240,11 @@ angular.module('starter.controllers', [])
     }
   }
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.view={}
     $scope.loggedInRedirect();
   });
-  console.log("stuff");
 
-  $scope.view={}
-  $scope.$on('$ionicView.enter',function(){
-    console.log("get ready for login");
-  })
   $scope.login=function(){
-    console.log("gonna login");
-    console.log($scope);
-    console.log($scope.view.username);
-    console.log($scope.view.password);
     if ($scope.view.username && $scope.view.password){
       $http.post(Url.getUrl()+'/auth/login', {
         username:$scope.view.username,
@@ -296,12 +261,9 @@ angular.module('starter.controllers', [])
         else{
           $scope.view.password=null;
           $scope.view.username=null;
-          console.log(res.data);
           window.localStorage.setItem("token", res.data);
           $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
-
             if(res.data.error!=true){
-              console.log(res.data);
               User.login(res.data);
               $state.go('tab.places');
             }
@@ -313,36 +275,27 @@ angular.module('starter.controllers', [])
     }
   }
   $scope.signup=function(){
-    console.log("gonna signup");
-    console.log($scope);
-    console.log($scope.view.username);
-    console.log($scope.view.password);
-    console.log($scope.view.accountType);
     if ($scope.view.username && $scope.view.password){
       $http.post(Url.getUrl()+'/auth/signup', {
         username:$scope.view.username,
         password:$scope.view.password,
       }).then(function(res){
-        if(res.data==="User not found"){
-          console.log(res.data);
-        $scope.view.errormessage=res.data;
-        User.showAlert("Username taken")
-        }
-        else if(res.data==="Username taken"){
-          User.showAlert("Username taken");
-        }
-        else{
-          console.log(res.data);
-          window.localStorage.setItem("token", res.data);
-          $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
-            if(res.data.error!=true){
-              console.log(res.data);
-              User.login(res.data);
-              $state.go('tab.places');
-            }
-          })
-
-        }
+          if(res.data==="User not found"){
+            $scope.view.errormessage=res.data;
+            User.showAlert("Username taken")
+          }
+          else if(res.data==="Username taken"){
+            User.showAlert("Username taken");
+          }
+          else{
+            window.localStorage.setItem("token", res.data);
+            $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
+              if(res.data.error!=true){
+                User.login(res.data);
+                $state.go('tab.places');
+              }
+            })
+          }
       })
     } else {
       User.showAlert("Enter Username and Password")
@@ -457,8 +410,6 @@ angular.module('starter.controllers', [])
     confirmPopup.then(function(res) {
       if(res) {
         $scope.notes.splice(index, 1);
-      } else {
-        console.log('Nothing happens');
       }
     });
   };
@@ -470,8 +421,6 @@ angular.module('starter.controllers', [])
    confirmPopup.then(function(res) {
      if(res) {
        $scope.links.splice(index, 1);
-     } else {
-       console.log('Nothing happens');
      }
    });
  };
