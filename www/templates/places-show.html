@@ -9,16 +9,18 @@
               </h2>
             </div>
           </div>
-          <h1 ng-show="view.editing" class="item item-input-inset" style="display: inline-block; border:none; width:80%;">
+          <h1 ng-show="view.editing" class="item item-input-inset" style="display: inline-block; border:none; width:100%;">
             <label class="item-input-wrapper">
-               <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName"/></span>
+               <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName" placeholder="Place Name"/></span>
             </label>
           </h1>
-          <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive editDelete ion-trash-a" style="font-size: 1.2em;">
-          </button>
-          <button ng-show="view.showOpt && view.editing" ng-click="edit(); view.showOpt=!view.showOpt" class="button button-balanced editDelete">
-            Save
-          </button>
+          <div class="buttons">
+            <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive editDelete ion-trash-a" style="font-size: 1.2em;">
+            </button>
+            <button ng-show="view.showOpt && view.editing" ng-click="edit(); view.showOpt=!view.showOpt" class="button button-balanced editDelete">
+              Save
+            </button>
+          </div>
         </div>
         <div>
           <div  style="padding-top:10px">
