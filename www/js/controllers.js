@@ -425,7 +425,7 @@ angular.module('starter.controllers', [])
    });
  };
    $scope.submitNew = function(){
-     return People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place.id, notes: $scope.notes, links: $scope.links}).then(function(){
+     return People.createNew({first_name: $scope.input.first, last_name: $scope.input.last, place_id: $scope.input.place.id}, $scope.notes, $scope.links).then(function(){
        setTimeout($scope.peopleRedirect, 200);
      })
    }

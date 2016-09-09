@@ -164,7 +164,7 @@ angular.module('starter.services', [])
   }
 })
 .service("People", function($http, Url,  Notes, Links,  $window){
-  this.createNew = function(data){
+  this.createNew = function(data, links, notes){
   var url = `${Url.getUrl()}/people/${data.place_id}/${window.localStorage.getItem('token')}`
   console.log(url);
   return $http.post(url, data)
@@ -176,11 +176,11 @@ angular.module('starter.services', [])
   .error(function (error, status){
       console.log(error, status);
   }).then(function(res){
-      data.notes.forEach(function(note){
+      notes.forEach(function(note){
         Notes.addNew(note, res.data).then(function(res){
         })
       })
-      data.links.forEach(function(link){
+      links.forEach(function(link){
         Links.addNew(link, res.data).then(function(res){
         });
       })
