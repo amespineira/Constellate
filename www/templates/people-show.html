@@ -49,7 +49,11 @@
                 <button class="button button-small editS" ng-click="addNote()" style="margin-left: 0">+</button>
               </div>
             </div>
-            <button ng-repeat="note in view.person.notes" class="button button-small button-balanced notes" ng-click="showConfirmNote(note.id)">{{note.text}}</button>
+            <div ng-repeat="type in view.types">
+              <h1>{{type.type}}</h1>
+                <button type="button" ng-repeat="note in type.notes" class="button button-small button-balanced notes" ng-click="showConfirmNote(note.id)">{{note.text}}</button>
+            </div>
+
             <div class="noItems" ng-show="view.person.notes.length === 0">No notes</div>
           </div>
           <div>
