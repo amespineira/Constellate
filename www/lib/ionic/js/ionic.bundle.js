@@ -42609,7 +42609,7 @@ var ngHideDirective = ['$animate', function($animate) {
      </file>
      <file name="style.css">
        span {
-         color: black;
+         color: #0c0c0e;
        }
      </file>
      <file name="protractor.js" type="protractor">
@@ -47610,7 +47610,7 @@ var ngAnimateSwapDirective = ['$animate', '$rootScope', function($animate, $root
  *   background:yellow;
  * }
  * .highlight.on-remove {
- *   background:black;
+ *   background:#0c0c0e;
  * }
  * </style>
  * ```
@@ -48057,7 +48057,7 @@ var ngAnimateSwapDirective = ['$animate', '$rootScope', function($animate, $root
         font-size:20px;
       }
       .profile {
-        background:black;
+        background:#0c0c0e;
         color:white;
         font-size:100px;
       }

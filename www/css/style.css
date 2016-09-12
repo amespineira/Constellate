@@ -96,7 +96,7 @@
   margin-right: 8px;
   padding-left: 10px;
   padding-right: 10px;
-  color: black;
+  color: #0c0c0e;
   cursor:default;
   border-radius: 5%;
 }
@@ -180,7 +180,7 @@ hr{
 }
 
 .peopleBack{
-  background-color: black;
+  background-color: #0c0c0e;
   border: none;
 }
 
@@ -195,7 +195,7 @@ hr{
 }
 
 .bar{
-  background-color: black;
+  background-color: #0c0c0e;
   border: none;
 }
 
@@ -208,11 +208,11 @@ hr{
 }
 
 .tabs-striped.tabs-background-positive .tabs {
-    background-color: black;
+    background-color: #0c0c0e;
     background-image: none;
-    border-color: black;
+    border-color: #0c0c0e;
 }
 
 .buttons{
-  background-color:black;
+  background-color:#0c0c0e;
 }

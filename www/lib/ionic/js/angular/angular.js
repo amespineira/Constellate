@@ -29239,7 +29239,7 @@ var ngHideDirective = ['$animate', function($animate) {
      </file>
      <file name="style.css">
        span {
-         color: black;
+         color: #0c0c0e;
        }
      </file>
      <file name="protractor.js" type="protractor">
