@@ -1,12 +1,15 @@
-<ion-view view-title="Account">
+<ion-view view-title="Account" style="background-color: #282B32;">
+  <ion-nav-buttons side="left">
+      <img style="width:36px;margin-left: 5px;" src="img/constellatelogo-light.png"></img>
+  </ion-nav-buttons>
   <ion-content ng-init='getUsername()'>
     <ul class="list">
-      <li class="item" ng-model='user'>
+      <li class="item" ng-model='user' style="background-color:transparent; margin-top: 20px; border:none; color:white">
         Logged in as: {{user}}
       </li>
     </ul>
     <ion-list>
-      <button ng-click="logout()" class="button button-full button-calm">Logout</button>
+      <button ng-click="logout()" class="button button-block button-calm" style="margin:auto; width: 90%; border-color: #49CD87;color:#49CD87">Logout</button>
     </ion-list>
   </ion-content>
 </ion-view>

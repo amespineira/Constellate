@@ -2,7 +2,24 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 .controller('PeopleCtrl', function($scope, $http, User, Chats, Data, $state, $filter, Url) {
-
+  var notes = [];
+  var saved = [];
+  var colors = ["#43C7BA", "#E04833", "#E6BA02", "#00BC7E", "#9F8B75", "#B797F3", "#C3D3D7", "#A99616"]
+  $scope.getColor = function (element){
+    if (saved.indexOf(element.text) === -1){
+      var color = colors[Math.floor(Math.random()*colors.length)]
+      var text = element.text;
+      saved.push(text)
+      notes.push({"text": text, "color": color})
+      element.color = color;
+    } else {
+      notes.forEach(function(note){
+        if (note.text == element.text){
+          element.color = note.color;
+        }
+      })
+    }
+  }
   $scope.controllertest="words";
   $scope.view={}
   $scope.$on('$ionicView.enter', function(e) {
@@ -26,7 +43,10 @@ angular.module('starter.controllers', [])
 
 })
 .controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state, $filter, Url) {
-
+  $scope.newView = false;
+  $scope.toggleNew = function(){
+    $scope.newView = !$scope.newView;
+  }
   $scope.controllertest="words";
   $scope.view={}
   $scope.$on('$ionicView.enter', function(e) {
@@ -238,6 +258,24 @@ angular.module('starter.controllers', [])
   $scope.goToPeople=function(){
     $state.go('tab.people')
   }
+  var notes = [];
+  var saved = [];
+  var colors = ["#43C7BA", "#E04833", "#E6BA02", "#00BC7E", "#9F8B75", "#B797F3", "#C3D3D7", "#A99616"]
+  $scope.getColor = function (element){
+    if (saved.indexOf(element.text) === -1){
+      var color = colors[Math.floor(Math.random()*colors.length)]
+      var text = element.text;
+      saved.push(text)
+      notes.push({"text": text, "color": color})
+      element.color = color;
+    } else {
+      notes.forEach(function(note){
+        if (note.text == element.text){
+          element.color = note.color;
+        }
+      })
+    }
+  }
 })
 .controller('LoginCtrl', function($scope, $stateParams, $http, User, Url, $location, $state, $rootScope){
   $scope.loggedInRedirect = function(){
@@ -248,7 +286,7 @@ angular.module('starter.controllers', [])
           }
           else{
             User.login(res.data)
-            $state.go('tab.people')
+            $state.go('tab.places')
           }
         })
     }

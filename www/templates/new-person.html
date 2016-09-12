@@ -1,44 +1,44 @@
-<ion-view view-title="Create New">
+<ion-view view-title="Create New" style="background-color:#282B32">
   <ion-content>
     <form ng-submit='submitNew(); personForm.$setPristine(); form.clear();' name="personForm">
     <div class="list">
-      <label class="item item-input" ng-class="{invalid: personForm.fname.$invalid && personForm.fname.$dirty}">
+      <label class="item item-input" ng-class="{invalid: personForm.fname.$invalid && personForm.fname.$dirty}" style="background-color:#282B32; border-color:#3A3A3A">
         <input type="text" placeholder="First Name" ng-model='input.first' name="fname" required ng-minlength=2>
       </label>
-      <label class="item item-input" ng-class="{invalid: personForm.lname.$invalid && personForm.lname.$dirty}">
+      <label class="item item-input" ng-class="{invalid: personForm.lname.$invalid && personForm.lname.$dirty}" style="background-color:#282B32; border-color:#3A3A3A">
         <input type="text" placeholder="Last Name" ng-model='input.last' name="lname" required ng-minlength=2>
       </label>
-      <label class="item item-input item-select" ng-class="{invalid: personForm.place.$invalid}">
-        <div class="input-label">
+      <label class="item item-input item-select" style="background-color:#282B32; border-top: 1px solid #3A3A3A;" ng-class="{invalid: personForm.place.$invalid}">
+        <div class="input-label" style="color:#979798">
           Place
         </div>
-        <select ng-model="input.place" ng-options='place as (place.name | capitalize) for place in places track by place.id' ng-change="showPopup()" name="place" required>
+        <select ng-model="input.place" ng-options='place as (place.name | capitalize) for place in places track by place.id' ng-change="showPopup()" name="place" required style="background-color:#282B32; color:#979798">
           <option value="NEW">+ Create New</option>
           <option value="" selected>Select a Place</option>
         </select>
       </label>
-      <div class="list">
-        <div class="item item-input-inset">
-          <label class="item-input-wrapper" style="margin-right:10px;">
-            <input type="text" placeholder="Note" ng-model='input.note_text'>
+      <div class="list" style="background-color:#282B32;margin-bottom:0;padding-top:0;">
+        <div class="item item-input-inset" style="background-color:#282B32; border-color:#3A3A3A">
+          <label class="item-input-wrapper" style="margin-right:10px; background-color: #1E1F21">
+            <input type="text" placeholder="Note" ng-model='input.note_text' style="color:white">
           </label>
-          <label class="item-input-wrapper">
-            <input type="text" placeholder="Type" ng-model='input.note_type'>
+          <label class="item-input-wrapper" style="background-color: #1E1F21">
+            <input type="text" placeholder="Type" ng-model='input.note_type' style="color:white">
           </label>
-          <button type="button" class="button button-small" ng-click="addNote({text: note_text, type: note_type})">
+          <button type="button" class="button button-small" ng-click="addNote({text: note_text, type: note_type})" style="background-color: #1E1F21; color:#8E8E8F">
             Add Note
           </button>
         </div>
       </div>
-      <div class="list">
-        <div class="item item-input-inset">
-          <label class="item-input-wrapper" style="margin-right:10px;">
-            <input type="text" placeholder="Website" ng-model='input.link_name'>
+      <div class="list" style="background-color:#282B32;margin-bottom:0;padding-top:0">
+        <div class="item item-input-inset" style="background-color:#282B32; border-color:#3A3A3A">
+          <label class="item-input-wrapper" style="margin-right:10px;background-color: #1E1F21">
+            <input type="text" placeholder="Website" ng-model='input.link_name' style="color:white">
           </label>
-          <label class="item-input-wrapper">
-            <input type="text" placeholder="URL" ng-model='input.url'>
+          <label class="item-input-wrapper" style="background-color: #1E1F21">
+            <input type="text" placeholder="URL" ng-model='input.url' style="color:white">
           </label>
-          <button type="button" class="button button-small" ng-click="addLink()">
+          <button type="button" class="button button-small" style="background-color: #1E1F21; color:#8E8E8F" ng-click="addLink()">
             Add Link
           </button>
         </div>
@@ -64,8 +64,8 @@
         </p>
       </div>
     </div>
-    <input type="submit" class="button button-block button-positive" value="Create Contact">
+    <input type="submit" class="button button-block button-energized" value="Create Contact" style="width:90%; margin:auto">
     </form>
-    <button class="button button-full button-positive" ng-click='peopleRedirect()'>Cancel</button>
+    <button type="button" class="button button-block button-assertive" ng-click='peopleRedirect()' style="width:90%; margin:auto; margin-top:20px">Cancel</button>
   </ion-content>
 </ion-view>

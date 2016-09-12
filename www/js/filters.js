@@ -105,3 +105,14 @@ angular.module('starter.filters',[])
     return str ? str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()}) : str;
   }
 })
+.filter('www', function(){
+  return function(url){
+    if (url.indexOf("www")>-1){
+      return url.substring(url.indexOf("www")+4, url.length)
+    } else if (url.indexOf("http")>-1){
+      return url.substring(url.lastIndexOf("/")+1, url.length)
+    } else {
+      return url
+    }
+  }
+})
