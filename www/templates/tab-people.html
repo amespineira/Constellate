@@ -10,8 +10,11 @@
     <div class="bar bar-header item-input-inset peopleBack">
       <label class="item-input-wrapper searchBar">
         <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" ng-model="view.search" placeholder="Search" style="color:white">
+        <input type="search" ng-model="view.search" placeholder="Search" style="color:#979797">
       </label>
+    </div>
+    <div ng-show="empty(view.people)" style="color:white;text-align:center;font-size:1.1em;margin-top:20px">
+      No people to show. Tap "+" to create a new contact.
     </div>
     <div class="card" ng-repeat="person in view.people | allSearch: view.search" style="color:white; border:none; background-color:transparent; box-shadow: none;">
       <div class="item item-divider" ng-click="display(person)" style="color:white; border:none; background-color:transparent; font-size:1.3em;">

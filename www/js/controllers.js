@@ -40,7 +40,12 @@ angular.module('starter.controllers', [])
     Data.setSelected("people", person.people_id)
     $state.go("tab.people-show")
   }
-
+  $scope.empty = function(object){
+    for(var key in object){
+      return false;
+    }
+    return true;
+  }
 })
 .controller('PlacesCtrl', function($scope, $http, User, Chats, Data, $state, $filter, Url) {
   $scope.newView = false;
@@ -70,6 +75,12 @@ angular.module('starter.controllers', [])
   $scope.display=function(place){
     Data.setSelected("places", place.id)
     $state.go("tab.places-show")
+  }
+  $scope.empty = function(object){
+    for(var key in object){
+      return false;
+    }
+    return true;
   }
 })
 .controller('PlacesDisplayCtrl', function($scope, $stateParams, $http, Url, User, Data, $ionicPopup, $location, $state){
@@ -120,6 +131,12 @@ angular.module('starter.controllers', [])
         $scope.view.places=Data.getData();
         $scope.view.place=Data.getSelected("places");
     })
+  }
+  $scope.empty = function(object){
+    for(var key in object){
+      return false;
+    }
+    return true;
   }
 })
 .controller('PeopleDisplayCtrl', function($scope, $stateParams, $http, User, Data, $ionicPopup, $location, $state, $filter, Links, Notes, Url){

@@ -10,7 +10,7 @@
       <div class="bar bar-header item-input-inset">
         <label class="item-input-wrapper searchBar">
           <i class="icon ion-ios-search placeholder-icon"></i>
-          <input type="search" ng-model="view.search" placeholder="Search" style="color:white">
+          <input type="search" ng-model="view.search" placeholder="Search" style="color:#979797">
         </label>
       </div>
       <div ng-show="newView" style='text-align: center;margin-top:20px'>
@@ -18,6 +18,9 @@
            <input name="name" type="text" ng-model="view.newName" placeholder="New Place"/></span>
         </label>
         <button class="button button-positive" style='display: inline-block;background-color: #22242A; color: white' ng-click="addPlace()">+</button>
+      </div>
+      <div ng-show="empty(view.places)" style="color:white;text-align:center;font-size:1.1em; margin-top:20px">
+        No places to show. Tap "+" to create a new place.
       </div>
       <div class="card" ng-repeat="place in view.places | custom: view.search"  style="background: transparent;">
         <div class="item item-text-wrap places" ng-click="display(place)" style="background: transparent; color: white;">

@@ -3,7 +3,7 @@
     <div class="list card placesList" style="background-color:#282B32">
         <div class="item item-avatar" ng-show="!view.editing" style="text-align: center; background-color:#282B32; border:1px solid #1E1F21" >
             <div class="TitlePeopleShow"  style="background-color:#282B32;">
-              <h2 style="font-size: 1.2em; font-weight: bold; line-height:2;color:white"; >
+              <h2 style="font-size: 1.2em; font-weight: bold; line-height:2;color:white">
                 {{view.place.name | capitalize}}
                 <div class="ion-edit iconEdit" ng-click="view.showOpt=!view.showOpt; edit()" ng-show="!view.editing" style="color:#AAAAAA"></div>
               </h2>
@@ -35,27 +35,31 @@
               <div class="item item-input-inset col" ng-show="view.search.type==='name'" style="background-color:#282B32;border:none">
                 <label class="item-input-wrapper searchBy" style="background-color:#1E1F21;">
                   <i class="icon ion-ios-search placeholder-icon"></i>
-                  <input type="search"  ng-model="view.search.name" placeholder="Name" style="color:white">
+                  <input type="search"  ng-model="view.search.name" placeholder="Name" style="color:#979797">
                 </label>
               </div>
               <div class="item item-input-inset col" ng-show="view.search.type==='note'" style="background-color:#282B32;border:none">
                 <label class="item-input-wrapper" style="margin-bottom: 5px; background-color:#1E1F21;">
                   <i class="icon ion-ios-search placeholder-icon"></i>
-                  <input type="search"  ng-model="view.search.noteType" placeholder="Note Type" style="color:white">
+                  <input type="search"  ng-model="view.search.noteType" placeholder="Note Type" style="color:#979797">
                 </label>
                 <label class="item-input-wrapper searchBy" style="background-color:#1E1F21;">
                   <i class="icon ion-ios-search placeholder-icon"></i>
-                  <input type="search"  ng-model="view.search.text" placeholder="Note Text" style="color:white"/>
+                  <input type="search"  ng-model="view.search.text" placeholder="Note Text" style="color:#979797"/>
                 </label>
               </div>
             </div>
           </div>
         </div>
       <div class="list">
-        <div class="item item-divider" style="background-color:#282B32; color:white; border-color:#AAAAAA; border-top:none">
+        <div class="item item-divider" style="background-color:#282B32; color:#F9F9F9; border-color:#AAAAAA; border-top:none; border-color:#3E3F41">
+          <div class="ion-android-star" style="display:inline-block; margin-right:5px"></div>
           People
-          <a class="ion-plus" ng-click="addPerson()" style="display:inline-block; float: right; color:white">
+          <a class="ion-plus" ng-click="addPerson()" style="display:inline-block; float: right; color:#F9F9F9">
           </a>
+        </div>
+        <div ng-show="empty(view.place.people)" style="color:white;text-align:center;font-size:1.1em; margin-top:20px">
+          No people to show. Tap "+" to create a new contact.
         </div>
         <a ng-repeat="person in view.place.people track by $index | placeSearch : view.search" class="item" ng-click="display(person)" style="background:transparent;color:white;border-top:none;border-color:#22242A">
           {{person.first_name | capitalize}} {{person.last_name | capitalize}}
