@@ -76,7 +76,7 @@
               <p class="link linkName" style="margin:0">
                 {{link.name | capitalize}}
               </p>
-              <a ng-href="{{link.url}}" class="link" style="margin-left:4px; display:inline-block;" >
+              <a ng-href="{{link.url | http}}" onclick="window.open(this.href, '_system', 'location=yes'); return false;" class="link" style="margin-left:4px; display:inline-block;" >
                 {{link.url | www}}
               </a>
               <div ng-click="showConfirmLink(link)" style="display:inline-block;color:#666666;float:right;" class="ion-ios-minus-outline"></div>

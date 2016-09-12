@@ -1,7 +1,7 @@
 {
-  "name": "q3ionic",
+  "name": "Constellate",
   "version": "1.1.1",
-  "description": "q3Ionic: An Ionic project",
+  "description": "Tap to remember",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",

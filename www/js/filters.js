@@ -116,3 +116,12 @@ angular.module('starter.filters',[])
     }
   }
 })
+.filter('http', function(){
+  return function(url){
+    if (url.indexOf("http")==-1){
+      return "http://" + url;
+    } else {
+      return url
+    }
+  }
+})
