@@ -1,25 +1,25 @@
-<ion-view view-title="Person">
+<ion-view view-title="Person" style="background-color:#282B32">
   <ion-content>
-    <div class="list card">
-        <div class="item item-avatar">
-          <div class="TitlePeopleShow" ng-show="!view.editing">
-            <h2>{{view.person.first_name | capitalize}} {{view.person.last_name | capitalize}}
-              <div class="ion-edit iconEdit" ng-click="view.showOpt=!view.showOpt; edit()" ng-show="!view.editing"></div>
-            </h2>
-            <p>{{input.place.name | capitalize}}</p>
+    <div class="list card" style="background:transparent">
+        <div class="item item-avatar" style="background:transparent; border:none;margin-bottom:10px;">
+          <div class="TitlePeopleShow" ng-show="!view.editing" style="background:transparent">
+            <div style="color:white; font-weight:500; font-size:1.2em">{{view.person.first_name | capitalize}} {{view.person.last_name | capitalize}}
+              <div class="ion-edit iconEdit" ng-click="view.showOpt=!view.showOpt; edit()" ng-show="!view.editing" style="color:#AAAAAA"></div>
+            </div>
+            <p style="color: #EAEAEB;padding-top: 6px;padding-bottom: 6px;font-weight: 300;letter-spacing: 1px;font-size: 1em;">{{input.place.name | capitalize}}</p>
           </div>
-          <div class="item item-input-inset" style="display: inline-block; border:none; width: 100%" ng-show="view.editing">
-            <label class="item-input-wrapper" style="display: inline-block; width: 50%">
-               <input name="firstName" type="text" ng-model="view.newFirstName" placeholder="First Name"/></span>
+          <div class="item item-input-inset" style="display: inline-block; border:none; width: 100%; background:transparent" ng-show="view.editing">
+            <label class="item-input-wrapper" style="display: inline-block; width: 50%; background-color:#1E1F21;">
+               <input name="firstName" type="text" ng-model="view.newFirstName" placeholder="First Name" style="color:white"/></span>
             </label>
-            <label class="item-input-wrapper" style="display: inline-block; width: 50%">
-               <input name="lastName" type="text" ng-model="view.newLastName" placeholder="Last Name"/></span>
+            <label class="item-input-wrapper" style="display: inline-block; width: 50%; background-color:#1E1F21;">
+               <input name="lastName" type="text" ng-model="view.newLastName" placeholder="Last Name" style="color:white"/></span>
              </label>
-             <label class="item item-input item-select">
+             <label class="item item-input item-select" style="background-color:#1E1F21;border:none;margin-top:4px">
               <div class="input-label">
                 Place
               </div>
-              <select style="display: block; margin-top: 10px" ng-model="input.place" ng-options='place as place.name for place in places track by place.id' ng-change="showPopup()" name="place" required>
+              <select style="display: block; background-color:#1E1F21; color:#AAAAAA" ng-model="input.place" ng-options='place as place.name for place in places track by place.id' ng-change="showPopup()" name="place" required>
                 <option value="NEW">+ Create New</option>
                 <option value="" selected disabled></option>
               </select>
@@ -31,60 +31,60 @@
             Save
           </button>
         </div>
-        <div class="item item-body">
+        <div class="item item-body" style="background:transparent; border-color:#AAAAAA">
           <div>
-            <div class="item item-divider dataDiv">
+            <div class="item item-divider dataDiv"style="background:transparent;color:white">
               <div class="dataTitle">
                 Notes
               </div>
             </div>
-            <div class="item item-divider dataDiv" style="padding: 0">
+            <div class="item item-divider dataDiv" style="padding: 0; background:transparent;border-bottom:none;border-color:#1E1F21">
               <div class="item item-input-inset dataInput">
-                <label class="item-input-wrapper dataField">
-                  <input name="type" type="text" ng-model="view.newType" placeholder="Type"/></span>
+                <label class="item-input-wrapper dataField" style="background-color:#1E1F21">
+                  <input name="type" type="text" ng-model="view.newType" placeholder="Type" style="color:white"/></span>
                 </label>
-                <label class="item-input-wrapper dataField">
-                  <input name="text" type="text" ng-model="view.newText" placeholder="Text"/></span>
+                <label class="item-input-wrapper dataField" style="background-color:#1E1F21">
+                  <input name="text" type="text" ng-model="view.newText" placeholder="Text" style="color:white"/></span>
                 </label>
-                <button class="button button-small editS" ng-click="addNote()" style="margin-left: 0">+</button>
+                <button class="button button-small editS" ng-click="addNote()" style="margin-left: 0; background-color:#1E1F21">+</button>
               </div>
             </div>
             <div ng-repeat="type in view.types">
-              <h1>{{type.type}}</h1>
-                <button type="button" ng-repeat="note in type.notes" class="button button-small button-balanced notes" ng-click="showConfirmNote(note.id)">{{note.text}}</button>
+              <div style="display:inline-block;margin-right:15px;color:#666666;margin-left:10px;line-height: 3;font-weight:bold;font-size:0.9em">{{type.type}}</div>
+                <button type="button" ng-repeat="note in type.notes" ng-init="getColor(note)" class="button button-small button-balanced notes" style="font-size: 0.7em; border: 1px solid white; min-height: 22px; line-height:0; max-height: 25px; font-weight: 500; background-color: transparent; padding-bottom: 2px;" ng-style="{'border-color':note.color, 'color': note.color}" ng-click="showConfirmNote(note.id)">{{note.text}}</button>
             </div>
-
             <div class="noItems" ng-show="view.person.notes.length === 0">No notes</div>
           </div>
           <div>
-            <div class="item item-divider dataDiv">
+            <div class="item item-divider dataDiv" style="background:transparent;color:white;margin-top:0">
               <div class="dataTitle">
                 Links
               </div>
             </div>
-            <div class="item item-divider dataDiv" style="padding: 0">
+            <div class="item item-divider dataDiv" style="padding: 0; background:transparent;border-bottom:none;border-color:#1E1F21">
               <div class="item item-input-inset dataInput">
-                <label class="item-input-wrapper dataField">
-                    <input name="name" type="text" ng-model="view.newName" placeholder="Website"/></span>
+                <label class="item-input-wrapper dataField" style="background-color:#1E1F21">
+                    <input name="name" type="text" ng-model="view.newName" placeholder="Website" style="color:white"/></span>
                 </label>
-                <label class="item-input-wrapper dataField">
-                   <input name="url" type="text" class="textInput" ng-model="view.newUrl" placeholder="URL"/></span>
+                <label class="item-input-wrapper dataField" style="background-color:#1E1F21">
+                   <input name="url" type="text" class="textInput" ng-model="view.newUrl" placeholder="URL" style="color:white"/></span>
                 </label>
-                <button class="button button-small editS" ng-click="addLink()" style="margin-left: 0">+</button>
+                <button class="button button-small editS" ng-click="addLink()" style="margin-left: 0; background-color:#1E1F21">+</button>
               </div>
             </div>
-            <a ng-repeat="link in view.person.links" class="subdued links">
-              <p class="link linkName" ng-click="showConfirmLink(link)">
+            <div ng-repeat="link in view.person.links" class="subdued links">
+              <p class="link linkName" style="margin:0">
                 {{link.name | capitalize}}
               </p>
-              <p class="link linkURL" href="{{link.url}}">
-                {{link.url}}
-              </p>
-            </a>
+              <a ng-href="{{link.url}}" class="link" style="margin-left:4px; display:inline-block;" >
+                {{link.url | www}}
+              </a>
+              <div ng-click="showConfirmLink(link)" style="display:inline-block;color:#666666;float:right;" class="ion-ios-minus-outline"></div>
+            </div>
             <div class="noItems" ng-show="view.person.links.length === 0">No links</div>
           </div>
         </div>
     </div>
-    <a class="button icon-left ion-chevron-left button-clear button-dark" ng-click="goToPeople()">All People</a>
+    <a class="button icon-left ion-chevron-left button-clear button-dark" style="color:black" ng-click="goToPeople()">All People</a>
   </ion-content>
 </ion-view>

@@ -1,23 +1,30 @@
 <ion-view view-title="Places">
-  <ion-content ng-init="loggedOutRedirect()">
+  <ion-nav-buttons side="right">
+      <button class="ion-plus" ng-click="toggleNew()" style="border:none; background-color: transparent; font-size: 1.2em; margin-right: 5px;color:#49CD87">
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+        <img style="width:36px;margin-left: 5px;" src="img/constellatelogo-light.png"></img>
+    </ion-nav-buttons>
+  <ion-content ng-init="loggedOutRedirect()" class="placeCards">
       <div class="bar bar-header item-input-inset">
-        <label class="item-input-wrapper">
+        <label class="item-input-wrapper searchBar">
           <i class="icon ion-ios-search placeholder-icon"></i>
-          <input type="search" ng-model="view.search" placeholder="Search">
+          <input type="search" ng-model="view.search" placeholder="Search" style="color:white">
         </label>
       </div>
-      <div style='text-align: center;'>
-        <label class="item item-input" style='width: 80%; display: inline-block;'>
-           <span style="padding-left:10px; display: inline-block;"> <input name="name" type="text" ng-model="view.newName" placeholder="New Place"/></span>
+      <div ng-show="newView" style='text-align: center;margin-top:20px'>
+        <label class="item item-input" style='width: 78%; display: inline-block;border-radius:5px;height: 45px:margin-top:4px;'>
+           <input name="name" type="text" ng-model="view.newName" placeholder="New Place"/></span>
         </label>
-        <button class="button button-positive" style='display: inline-block;' ng-click="addPlace()">+</button>
+        <button class="button button-positive" style='display: inline-block;background-color: #22242A; color: white' ng-click="addPlace()">+</button>
       </div>
-      <div class="card" ng-repeat="place in view.places | custom: view.search">
-        <div class="item item-text-wrap places" ng-click="display(place)">
-          <div style='margin-top: -8px;'>
+      <div class="card" ng-repeat="place in view.places | custom: view.search"  style="background: transparent;">
+        <div class="item item-text-wrap places" ng-click="display(place)" style="background: transparent; color: white;">
+          <div style='margin-top: -8px;font-weight: 500;font-size: 1.1em;'>
             {{place.name | capitalize }}
           </div>
-          <div style="font-size: 0.7em; margin-top: -20px;">
+          <div style="font-size: 0.7em; margin-top: -20px;color:#E2B702">
             {{place.people.length}} {{ place.people.length > 1 || place.people.length == 0 ? 'contacts' : 'contact' }}
           </div>
         </div>

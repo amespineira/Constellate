@@ -1,32 +1,39 @@
 <ion-view view-title="People" style="background-color:#282B32">
+  <ion-nav-buttons side="right">
+      <button class="ion-plus" ng-click="addPerson()" style="border:none; background-color: transparent; font-size: 1.2em; margin-right: 5px;color:#49CD87">
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+        <img style="width:36px;margin-left: 5px;" src="img/constellatelogo-light.png"></img>
+    </ion-nav-buttons>
   <ion-content ng-init='loggedOutRedirect()'>
-    <div class="bar bar-header item-input-inset">
-      <label class="item-input-wrapper">
+    <div class="bar bar-header item-input-inset peopleBack">
+      <label class="item-input-wrapper searchBar">
         <i class="icon ion-ios-search placeholder-icon"></i>
-        <input type="search" ng-model="view.search" placeholder="Search">
+        <input type="search" ng-model="view.search" placeholder="Search" style="color:white">
       </label>
     </div>
-    <button class="button button-full" ng-click="addPerson()">+ Add New</button>
-<div class="card" ng-repeat="person in view.people | allSearch: view.search">
-  <div class="item item-divider" ng-click="display(person)" style="color:black; border:none; background-color:transparent; font-size:1.3em">
-          <div class="" style="display:inline-block">
-            {{person.first_name | capitalize}} {{person.last_name | capitalize}}
-          </div>
-          <div style="display:inline-block; margin-left: 15px; margin-right: 15px" class="noteNum">
-            <div style="display:inline-block; margin-right: 5px; color: #F2C302" class="ion-document-text"></div>
-            <div style="color: #F2C302; display:inline-block">{{person.notes.length}}</div>
-          </div>
-          <div style="display:inline-block" class="linkNum">
-            <div style="display:inline-block; margin-right: 5px; color: red" class="ion-link"></div>
-            <div style="display:inline-block; color: red">{{person.links.length}}</div>
-          </div>
+    <div class="card" ng-repeat="person in view.people | allSearch: view.search" style="color:white; border:none; background-color:transparent; box-shadow: none;">
+      <div class="item item-divider" ng-click="display(person)" style="color:white; border:none; background-color:transparent; font-size:1.3em;">
+        <div style="display: inline-block; font-weight: 500; font-size:1em">{{person.first_name | capitalize}} {{person.last_name | capitalize}}</div>
       </div>
-      <div class="item item-text-wrap"style="background-color:transparent; border: none;">
-        Met at {{view.places[person.place_id].name | capitalize}}
+      <div class="item item-text-wrap placeNamePeople">
+        {{view.places[person.place_id].name | capitalize}}
       </div>
-
-        <button type="button" ng-repeat="note in person.notes" class="button button-small button-balanced notes" ng-click="showConfirmNote(note.id)">{{note.type}}</button>
+      <div class="noteBlock">
+        <button type="button" ng-repeat="note in person.notes" ng-init="getColor(note)" class="button button-small button-balanced notes peopleNotes" style="font-size: 0.7em; border: 1px solid white; min-height: 22px; line-height:0; max-height: 25px; font-weight: 500; background-color: transparent; padding-bottom: 2px;" ng-style="{'border-color':note.color, 'color': note.color}" ng-click="showConfirmNote(note.id)">{{note.text.toUpperCase()}}</button>
+      </div>
+      <div style="display:block; font-size: 1em; text-align: right; margin-right: 5px">
+        <div style="display:inline-block; margin-left: 15px; margin-right: 5px;" class="noteNum">
+          <div style="display:inline-block; margin-right: 1px; color: #237CB6" class="ion-document-text"></div>
+          <div style="color: #237CB6; display:inline-block;">{{person.notes.length}}</div>
+        </div>
+        <div style="display:inline-block" class="linkNum">
+          <div style="display:inline-block; margin-right: 1px; color: #FE561B" class="ion-link"></div>
+          <div style="display:inline-block; color: #FE561B">{{person.links.length}}</div>
+        </div>
+      </div>
+      <hr>
     </div>
-    <hr>
   </ion-content>
 </ion-view>

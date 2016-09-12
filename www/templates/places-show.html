@@ -1,65 +1,63 @@
-<ion-view view-title="Place">
+<ion-view view-title="Place" style="background-color:#282B32">
   <ion-content>
-    <div class="list card placesList">
-        <div class="item item-avatar" ng-show="!view.editing" style="text-align: center">
-            <div class="TitlePeopleShow">
-              <h2 style="font-size: 1.2em; font-weight: bold; line-height:2">
+    <div class="list card placesList" style="background-color:#282B32">
+        <div class="item item-avatar" ng-show="!view.editing" style="text-align: center; background-color:#282B32; border:1px solid #1E1F21" >
+            <div class="TitlePeopleShow"  style="background-color:#282B32;">
+              <h2 style="font-size: 1.2em; font-weight: bold; line-height:2;color:white"; >
                 {{view.place.name | capitalize}}
-                <div class="ion-edit iconEdit" ng-click="view.showOpt=!view.showOpt; edit()" ng-show="!view.editing"></div>
+                <div class="ion-edit iconEdit" ng-click="view.showOpt=!view.showOpt; edit()" ng-show="!view.editing" style="color:#AAAAAA"></div>
               </h2>
             </div>
           </div>
-          <h1 ng-show="view.editing" class="item item-input-inset" style="display: inline-block; border:none; width:100%;">
+          <h1 ng-show="view.editing" class="item item-input-inset" style="display: inline-block; border:none; width:100%; background-color:#282B32">
             <label class="item-input-wrapper">
                <span style="padding-left:10px"> <input name="name" type="text" ng-model="view.newName" placeholder="Place Name"/></span>
             </label>
           </h1>
-          <div class="buttons">
-            <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive editDelete ion-trash-a" style="font-size: 1.2em;">
+            <button ng-show="view.showOpt" ng-click="confirmDelete()" class="button button-assertive editDelete ion-trash-a" style="font-size: 1.2em;margin-right:20px">
             </button>
             <button ng-show="view.showOpt && view.editing" ng-click="edit(); view.showOpt=!view.showOpt" class="button button-balanced editDelete">
               Save
             </button>
-          </div>
         </div>
         <div>
           <div  style="padding-top:10px">
-                <label class="item item-input item-select searchBy">
-                  <div class="input-label">
+                <label class="item item-input item-select searchBy" style="background-color:#1E1F21;border: 1px solid #3E3F41">
+                  <div class="input-label" style="color:#AAAAAA">
                     Search By
                   </div>
-                    <select ng-model="view.search.type">
+                    <select ng-model="view.search.type" style="background-color:#1E1F21; color:#AAAAAA">
                       <option selected value="name">Name</option>
                       <option  value="note">Note</option>
                     </select>
                 </label>
             <div class="row">
-              <div class="item item-input-inset col" ng-show="view.search.type==='name'">
-                <label class="item-input-wrapper searchBy">
+              <div class="item item-input-inset col" ng-show="view.search.type==='name'" style="background-color:#282B32;border:none">
+                <label class="item-input-wrapper searchBy" style="background-color:#1E1F21;">
                   <i class="icon ion-ios-search placeholder-icon"></i>
-                  <input type="search"  ng-model="view.search.name" placeholder="Name">
+                  <input type="search"  ng-model="view.search.name" placeholder="Name" style="color:white">
                 </label>
               </div>
-              <div class="item item-input-inset col" ng-show="view.search.type==='note'">
-                <label class="item-input-wrapper" style="margin-bottom: 5px;">
+              <div class="item item-input-inset col" ng-show="view.search.type==='note'" style="background-color:#282B32;border:none">
+                <label class="item-input-wrapper" style="margin-bottom: 5px; background-color:#1E1F21;">
                   <i class="icon ion-ios-search placeholder-icon"></i>
-                  <input type="search"  ng-model="view.search.noteType" placeholder="Note Type">
+                  <input type="search"  ng-model="view.search.noteType" placeholder="Note Type" style="color:white">
                 </label>
-                <label class="item-input-wrapper searchBy">
+                <label class="item-input-wrapper searchBy" style="background-color:#1E1F21;">
                   <i class="icon ion-ios-search placeholder-icon"></i>
-                  <input type="search"  ng-model="view.search.text" placeholder="Note Text"/>
+                  <input type="search"  ng-model="view.search.text" placeholder="Note Text" style="color:white"/>
                 </label>
               </div>
             </div>
           </div>
         </div>
       <div class="list">
-        <div class="item item-divider">
+        <div class="item item-divider" style="background-color:#282B32; color:white; border-color:#AAAAAA; border-top:none">
           People
+          <a class="ion-plus" ng-click="addPerson()" style="display:inline-block; float: right; color:white">
+          </a>
         </div>
-        <button class="button button-full" ng-click="addPerson()">+ Add New</button>
-
-        <a ng-repeat="person in view.place.people | placeSearch : view.search" class="item" ng-click="display(person)">
+        <a ng-repeat="person in view.place.people track by $index | placeSearch : view.search" class="item" ng-click="display(person)" style="background:transparent;color:white;border-top:none;border-color:#22242A">
           {{person.first_name | capitalize}} {{person.last_name | capitalize}}
         </a>
       </div>
