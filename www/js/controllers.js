@@ -13,16 +13,7 @@ angular.module('starter.controllers', [])
   $scope.update=function(){
     Data.update().then(function(){
       $scope.view.places=Data.getData();
-      $scope.view.people=Data.getPeople().sort(function(person1, person2){
-       if (person1.first_name.toLowerCase() > person2.first_name.toLowerCase()) {
-         return 1;
-       }
-       if (person1.first_name.toLowerCase() < person2.first_name.toLowerCase()) {
-         return -1;
-       }
-       return 0;
-      });
-
+      $scope.view.people=Data.getPeople()
     })
   }
   $scope.addPerson = function(){
@@ -335,7 +326,7 @@ angular.module('starter.controllers', [])
       $scope.user = User.getCurrUser().username;
     }
   }
-  $scope.user = '';
+
   $scope.$on('$ionicView.enter', function(){
     $scope.getUsername();
     $scope.$on('$ionicView.enter', function(e) {

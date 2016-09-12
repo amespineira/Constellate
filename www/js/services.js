@@ -46,7 +46,7 @@ angular.module('starter.services', [])
   }
   function formatData(apiData) {
     data.places={};
-    data.people=[];
+    data.people={};
     apiData.places.forEach(function(place){
       data.places[Number(place.id)]={
         id:Number(place.id),
@@ -55,7 +55,7 @@ angular.module('starter.services', [])
       };
     })
     apiData.people.forEach(function(person){
-      data.people.push(person)
+      data.people[Number(person.people_id)]=person
       data.places[Number(person.place_id)].people.push(data.people[Number(person.people_id)]);
     })
 
@@ -164,7 +164,7 @@ angular.module('starter.services', [])
   }
 })
 .service("People", function($http, Url,  Notes, Links,  $window){
-  this.createNew = function(data, links, notes){
+  this.createNew = function(data, notes, links){
   var url = `${Url.getUrl()}/people/${data.place_id}/${window.localStorage.getItem('token')}`
   console.log(url);
   return $http.post(url, data)
