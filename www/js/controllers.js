@@ -328,27 +328,30 @@ angular.module('starter.controllers', [])
   }
   $scope.signup=function(){
     if ($scope.view.username && $scope.view.password){
-      $http.post(Url.getUrl()+'/auth/signup', {
-        username:$scope.view.username,
-        password:$scope.view.password,
-      }).then(function(res){
-          if(res.data==="User not found"){
-            $scope.view.errormessage=res.data;
-            User.showAlert("Username taken")
-          }
-          else if(res.data==="Username taken"){
-            User.showAlert("Username taken");
-          }
-          else{
-            window.localStorage.setItem("token", res.data);
-            $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
-              if(res.data.error!=true){
-                User.login(res.data);
-                $state.go('tab.places');
-              }
-            })
-          }
-      })
+    
+      if($scope.view.username.length>5 && $scope.view.username.length<20 && $scope.view.password.length>5 && $scope.view.password.length<20){
+        $http.post(Url.getUrl()+'/auth/signup', {
+          username:$scope.view.username,
+          password:$scope.view.password,
+        }).then(function(res){
+            if(res.data==="User not found"){
+              $scope.view.errormessage=res.data;
+              User.showAlert("Username taken")
+            }
+            else if(res.data==="Username taken"){
+              User.showAlert("Username taken");
+            }
+            else{
+              window.localStorage.setItem("token", res.data);
+              $http.get(Url.getUrl()+'/users/' +window.localStorage.getItem('token')).then(function(res){
+                if(res.data.error!=true){
+                  User.login(res.data);
+                  $state.go('tab.places');
+                }
+              })
+            }
+        })
+      }
     } else {
       User.showAlert("Enter Username and Password")
     }

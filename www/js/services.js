@@ -92,10 +92,11 @@ angular.module('starter.services', [])
     },
     update: function(){
       var user=User.getCurrUser();
+
       return $http.get(Url.getUrl()+'/users/'+user.id+"/data/"+window.localStorage.getItem('token')).then(function(res){
         if(res.data.error!=true){
+        
         //  console.log(res.data);
-        console.log(this);
           formatData(res.data)
         }
       })
