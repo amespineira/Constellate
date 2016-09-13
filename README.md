@@ -8,12 +8,12 @@ Constellate was built as a decoupled app with a [Java back-end](https://github.c
 
 Here are some screenshots:
 
-![Alt text](http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%202.19.12%20PM_zpskyhbvilw.png | width=200)
-![Alt text](http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%202.04.16%20PM_zpsib1qvnys.png | width=200)
-![Alt text](http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%202.05.11%20PM_zpsuringw28.png | width=200)
-![Alt text](http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%205.38.22%20PM_zpsaqkhb3sv.png | width=200)
-![Alt text](http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%202.05.11%20PM_zpsuringw28.png | width=200)
-![Alt text](http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%205.41.53%20PM_zps9ddzyihj.png | width=200)
-![Alt text](http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%205.41.36%20PM_zpsihwj8g0a.png | width=200)
+<img src="http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%202.19.12%20PM_zpskyhbvilw.png" width="200">
+<img src="http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%202.04.16%20PM_zpsib1qvnys.png" width="200">
+<img src="http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%202.05.11%20PM_zpsuringw28.png" width="200">
+<img src="http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%205.38.22%20PM_zpsaqkhb3sv.png" width="200">
+<img src="http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%202.05.11%20PM_zpsuringw28.png" width="200">
+<img src="http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%205.41.53%20PM_zps9ddzyihj.png" width="200">
+<img src="http://i1308.photobucket.com/albums/s615/Attacktic/Simulator%20Screen%20Shot%20Sep%2013%202016%205.41.36%20PM_zpsihwj8g0a.png" width="200">
 
 App Store [URL](#)
