@@ -3,7 +3,7 @@
 By [Andres Espineira](https://github.com/amespineira) & [Adriana Galvez](https://github.com/Attacktic)
 
 Have you ever been to an event but later realized you remembered half of the people you met?
-Constellate will help you keep track of who you meet and where by letting you add notes about each person, what you talked about and so on.
+Constellate will help you keep track of who you meet and where by displaying notes about each person, what you talked about and more.
 
 Constellate was built as a decoupled app with a [Java back-end](https://github.com/amespineira/q3Project) and Ionic/Angular front-end.
 
